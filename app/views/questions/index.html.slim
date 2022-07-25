@@ -1,0 +1,11 @@
+= link_to 'Ask question', new_question_path
+
+h1 Questions
+- for question in @questions
+  h2 Question
+  p = question.title
+  p = question.body
+  p= link_to 'See answers', question_path(question)
+  - if current_user
+    - if question.user_id.equal? current_user.id
+      p = button_to 'Destroy question', question_path(question), method: :delete

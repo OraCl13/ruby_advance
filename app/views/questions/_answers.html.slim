@@ -1,0 +1,5 @@
+- @question.answers.each do |answer|
+  p= answer.body
+  - if current_user
+    - if answer.user_id.equal? current_user.id
+      p = button_to 'Destroy answer', question_answer_path(@question,answer), method: :delete
