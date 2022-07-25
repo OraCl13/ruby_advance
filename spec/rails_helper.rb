@@ -29,13 +29,15 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
+  config.include FactoryBot::Syntax::Methods
+
+  config.include Devise::TestHelpers, type: :controller
+
+  config.extend ControllerMacros, type: :controller
+
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
-  # If you're not using ActiveRecord, or you'd prefer not to run each of your
-  # examples within a transaction, remove the following line or assign false
-  # instead of true.
-  config.use_transactional_fixtures = false # true
+  config.use_transactional_fixtures = true # true
 
   config.infer_spec_type_from_file_location!
 
@@ -46,32 +48,5 @@ RSpec.configure do |config|
       with.test_framework :rspec
       with.library :rails
     end
-  end
-
-  config.include FactoryBot::Syntax::Methods
-
-  config.include Devise::TestHelpers, type: :controller
-
-  config.extend ControllerMacros, type: :controller
-  config.include AcceptanceMacros, type: :feature
-
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-  end
-
-  config.before(:each, js: true) do
-    DatabaseCleaner.strategy = :truncation
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
   end
 end

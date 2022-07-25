@@ -5,7 +5,7 @@ class AnswersController < ApplicationController
 
   def create
     @question = Question.find(params[:question_id])
-    @question.answers.create(answer_params.merge(:user_id => current_user.id))
+    @question.answers.create(answer_params.merge(user_id: current_user.id))
   end
 
   def destroy
