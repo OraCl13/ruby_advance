@@ -6,5 +6,6 @@ p= @question.body
 
 = form_for [@question, @answer], remote: true, html: {id: @answer.id} do |f|
   = f.label :body, 'Your answer'
+  .answer-errors
   = f.text_area :body
   = f.submit 'Create'

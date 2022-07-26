@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'Create Answer', %q{
   In order to get info from community
@@ -12,14 +12,21 @@ feature 'Create Answer', %q{
   scenario 'Authenticated user create answer', js: true do # TODO
     sign_in(user)
     visit question_path(question)
-    save_and_open_page
+
     fill_in 'Your answer', with: 'My answer'
-    # save_and_open_page
     click_on 'Create'
 
     expect(current_path).to eq question_path(question)
     within '.answers' do
       expect(page).to have_content 'My answer'
     end
+  end
+
+  scenario 'User try to create invalid answer', js: true do
+    sign_in(user)
+    visit question_path(question)
+    click_on 'Create'
+
+    expect(page).to have_content "Body can't be blank"
   end
 end

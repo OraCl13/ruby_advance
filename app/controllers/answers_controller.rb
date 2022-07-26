@@ -5,7 +5,14 @@ class AnswersController < ApplicationController
 
   def create
     @question = Question.find(params[:question_id])
-    @question.answers.create(answer_params.merge(:user_id => current_user.id))
+    @answer = @question.answers.create(answer_params.merge(user_id: current_user.id))
+  end
+
+  def update
+    @answer = Answer.find(params[:id])
+    @answer.update(answer_params)
+    @question = @answer.reply_to
+    flash[:notice] = 'Your answer successfully updated.'
   end
 
   def destroy
@@ -14,7 +21,16 @@ class AnswersController < ApplicationController
     @answer.destroy
 
     flash[:notice] = 'Your answer successfully deleted.'
-    redirect_to question_path(@question)
+  end
+
+  def make_best
+    @question = Question.find(params[:question_id])
+    @answer = Answer.find(params[:answer_id])
+
+    @question.answers.update_all(best_answer: false)
+    @answer.update(best_answer: true)
+
+    flash[:notice] = 'You choose best answer'
   end
 
   private
