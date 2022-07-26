@@ -23,6 +23,16 @@ class AnswersController < ApplicationController
     flash[:notice] = 'Your answer successfully deleted.'
   end
 
+  def make_best
+    @question = Question.find(params[:question_id])
+    @answer = Answer.find(params[:answer_id])
+
+    @question.answers.update_all(best_answer: false)
+    @answer.update(best_answer: true)
+
+    flash[:notice] = 'You choose best answer'
+  end
+
   private
 
   def answer_params
