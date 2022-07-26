@@ -42,6 +42,10 @@ RSpec.describe QuestionsController, type: :controller do
       expect(assigns(:question)).to be_a_new(Question)
     end
 
+    it 'builds a new Attachment to @question' do
+      expect(assigns(:question).attachments.first).to be_a_new(Attachment)
+    end
+
     it 'renders new view' do
       expect(response).to render_template :new
     end
@@ -87,7 +91,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
     sign_in_user
-    context 'valid attributes' do
+    context 'valid attributes', js: true do
       it 'assings the requested question to @question' do
         patch :update, id: question, question: attributes_for(:question)
         expect(assigns(:question)).to eq question
