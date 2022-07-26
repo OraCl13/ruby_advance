@@ -12,4 +12,4 @@ p = link_to 'See answers', question_path(question)
         = f.label :body, 'Text'
         = f.text_area :body
         = f.submit 'Save'
-    p = button_to 'Destroy question', question_path(question), method: :delete
+    p = button_to 'Destroy question', question_path(question), method: :delete, remote: true

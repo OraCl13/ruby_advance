@@ -124,6 +124,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (12.3.2)
     rdoc (4.3.0)
+    remotipart (1.2.1)
     responders (1.1.2)
       railties (>= 3.2, < 4.2)
     rspec-core (3.9.3)
@@ -208,6 +209,7 @@ DEPENDENCIES
   pg (~> 0.21)
   pry
   rails (= 4.1.0)
+  remotipart (~> 1.2.1)
   rspec-rails
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
