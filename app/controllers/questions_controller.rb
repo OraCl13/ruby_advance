@@ -37,9 +37,9 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
+    flash[:notice] = 'Your question successfully deleted.'
     @question = Question.find(params[:id])
     @question.destroy
-    flash[:notice] = 'Your question successfully deleted.'
   end
 
   private

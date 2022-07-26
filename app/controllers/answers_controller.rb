@@ -16,11 +16,10 @@ class AnswersController < ApplicationController
   end
 
   def destroy
+    flash[:notice] = 'Your answer successfully deleted.'
     @question = Question.find(params[:question_id])
     @answer = Answer.find(params[:id])
     @answer.destroy
-
-    flash[:notice] = 'Your answer successfully deleted.'
   end
 
   def make_best
