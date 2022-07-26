@@ -3,6 +3,7 @@
     $('.answer-errors').html('<%= j message %>')
   <% end %>
 <% else %>
+  console.log("CREATE")
   $('.answers').html('<%= j render 'questions/answers' %>');
   $('#answer_body').val('');
 <% end %>

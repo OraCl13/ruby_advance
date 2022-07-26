@@ -9,4 +9,4 @@
             = f.label :body, 'Answer'
             = f.text_area :body
             = f.submit 'Save'
-        p = button_to 'Destroy answer', question_answer_path(@question, answer), class: 'destroy-answer-link', method: :delete, remote: true
+        p = button_to 'Destroy answer', question_answer_path(@question, answer), method: :delete, remote: true
