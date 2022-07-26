@@ -7,4 +7,5 @@ RSpec.describe Question, type: :model do
 
   # Table connections
   it { should have_many(:answers) }
+  it { should have_many(:attachments) }
 end

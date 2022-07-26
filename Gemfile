@@ -32,6 +32,8 @@ gem 'devise'
 
 gem 'turbolinks', '~> 1.3'
 
+gem 'carrierwave'
+
 group :test, :development do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
