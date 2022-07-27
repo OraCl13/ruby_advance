@@ -11,7 +11,7 @@ ul
 = form_for [@question, @answer], remote: true, html: {id: @answer.id} do |f|
   = f.label :body, 'Your answer'
   .answer-errors
-  = f.text_area :body
+  = f.text_area :body, id: "answer_body"
   p
     = f.fields_for :attachments do |a|
       = a.label :file

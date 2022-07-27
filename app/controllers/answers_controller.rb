@@ -12,11 +12,11 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:id])
     @answer.update(answer_params)
     @question = @answer.reply_to
-    flash[:notice] = 'Your answer successfully updated.'
+    # flash[:notice] = 'Your answer successfully updated.'
   end
 
   def destroy
-    flash[:notice] = 'Your answer successfully deleted.'
+    # flash[:notice] = 'Your answer successfully deleted.'
     @question = Question.find(params[:question_id])
     @answer = Answer.find(params[:id])
     @answer.destroy
@@ -29,7 +29,7 @@ class AnswersController < ApplicationController
     @question.answers.update_all(best_answer: false)
     @answer.update(best_answer: true)
 
-    flash[:notice] = 'You choose best answer'
+    # flash[:notice] = 'You choose best answer'
   end
 
   private
