@@ -1,0 +1,5 @@
+.questions
+  = link_to 'Ask question', new_question_path
+  h1 Questions
+  - for question in questions
+    = render 'question', question: question

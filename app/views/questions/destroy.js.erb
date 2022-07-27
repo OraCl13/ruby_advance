@@ -1,8 +1,14 @@
-<% if @answer.errors.present? %>
-  <% @answer.errors.full_messages.each do |message| %>
-    $('.answer-errors').html('<%= j message %>')
+<% if @question.errors.present? %>
+  <% @question.errors.full_messages.each do |message| %>
+    $('.questions-errors').html('<%= j message %>')
   <% end %>
 <% else %>
+//$(document).ready(function() {
+//    var objects = $(".questions");
+//    for (var obj of objects) {
+//        console.log(obj);
+//    }
+//});
   console.log("DESTROY")
-  $('.answers').html('<%= j render 'questions/question' %>');
+  $('.questions').html('<%= j render 'questions/questions', questions: Question.all %>');
 <% end %>
