@@ -6,5 +6,5 @@ class Answer < ActiveRecord::Base
 
   default_scope { order(best_answer: :desc) }
 
-  accepts_nested_attributes_for :attachments
+  accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 end

@@ -4,5 +4,5 @@ class Question < ActiveRecord::Base
   has_many :answers, foreign_key: :reply_to_id, dependent: :destroy
   has_many :attachments, dependent: :destroy, as: :attachmentable
 
-  accepts_nested_attributes_for :attachments
+  accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 end
