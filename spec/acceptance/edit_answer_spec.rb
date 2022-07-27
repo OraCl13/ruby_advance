@@ -9,6 +9,10 @@ feature 'Answer editing', %q{
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer, reply_to: question) }
 
+  given(:user2) { create(:user) }
+  given!(:question2) { create(:question) }
+  given!(:answer2) { create(:answer, reply_to: question) }
+
   scenario 'Unauthenticated user try to edit question' do
     visit question_path(question)
     expect(page).to_not have_link 'Edit'
@@ -33,7 +37,9 @@ feature 'Answer editing', %q{
     end
 
     scenario ' try to edit other users question' do
-
+      click_on 'Вихід'
+      sign_in(user2)
+      expect(page).to have_no_link 'Edit'
     end
   end
 end

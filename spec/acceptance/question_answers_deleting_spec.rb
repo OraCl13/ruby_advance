@@ -7,17 +7,19 @@ feature 'Delete question and answer', %q{
 } do
 
   given(:user1) { create(:user) }
+  given!(:question) { create(:question) }
+  given!(:answer) { create(:answer, reply_to: question) }
   given(:user2) { create(:user) }
 
   scenario 'Deleting ours questions&answers', js: true do # save_and_open_page
     sign_in(user1)
-
     create_question
     create_answer
 
-    expect(page).to have_content 'Title_test'
-    expect(page).to have_content 'bodubodybody'
-    # TODO
+    visit question_path(Question.first)
+
+    expect(page).to have_content 'MyString'
+    expect(page).to have_content 'MyText' # TODO
   end
 
   scenario 'Deleting not ours questions&answers', js: true do
