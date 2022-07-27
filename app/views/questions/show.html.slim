@@ -12,8 +12,10 @@ ul
   = f.label :body, 'Your answer'
   .answer-errors
   = f.text_area :body
+  p Add Attachments:
   p
-    = f.fields_for :attachments do |a|
-      = a.label :file
-      = a.file_field :file
+    = f.fields_for :attachments, @answer do |a|
+      = render 'attachment_fields', f: a
+  p
+    = link_to_add_association "add file", f, :attachments
   = f.submit 'Create'
