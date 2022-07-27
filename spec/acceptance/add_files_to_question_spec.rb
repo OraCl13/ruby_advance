@@ -17,6 +17,7 @@ feature 'Add files to quesiton', %q{
     fill_in 'Title', with: 'Title_test'
     fill_in 'Text', with: 'bodubodybody'
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+    attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
     click_on 'Create'
 
     expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'

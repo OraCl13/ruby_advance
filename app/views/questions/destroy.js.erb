@@ -3,12 +3,6 @@
     $('.questions-errors').html('<%= j message %>')
   <% end %>
 <% else %>
-//$(document).ready(function() {
-//    var objects = $(".questions");
-//    for (var obj of objects) {
-//        console.log(obj);
-//    }
-//});
   console.log("DESTROY")
   $('.questions').html('<%= j render 'questions/questions', questions: Question.all %>');
 <% end %>

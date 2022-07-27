@@ -17,6 +17,7 @@ feature 'Add files to answer', %q{
   scenario 'Authenticated user adds file to answer', js: true do # save_and_open_page
     fill_in 'Your answer', with: 'ANSWERANSWRR'# TODO
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+    attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
     click_on 'Create'
 
     visit question_path(question)
