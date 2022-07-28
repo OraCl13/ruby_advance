@@ -32,6 +32,12 @@ gem 'devise'
 
 gem 'turbolinks', '~> 1.3'
 
+gem 'carrierwave'
+
+gem 'remotipart', '~> 1.2.1'
+
+gem "cocoon"
+
 group :test, :development do
   gem 'rspec-rails'
   gem 'factory_bot_rails'

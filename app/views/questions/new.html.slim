@@ -1,7 +1,15 @@
 h1 New Question
 = form_for @question do |f|
-  = f.label :title
-  = f.text_field :title
-  = f.label :body, 'Text'
-  = f.text_area :body
+  p
+    = f.label :title
+    = f.text_field :title
+  p
+    = f.label :body, 'Text'
+    = f.text_area :body
+  p Add Attachments:
+  p
+    = f.fields_for :attachments, @question do |a|
+      = render 'attachment_fields', f: a
+  p
+    = link_to_add_association "add file", f, :attachments
   = f.submit 'Create'

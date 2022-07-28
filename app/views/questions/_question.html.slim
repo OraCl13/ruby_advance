@@ -1,6 +1,9 @@
 h2 Question
 p = question.title
 p = question.body
+ul
+  -question.attachments.each do |a|
+    li= link_to a.file.identifier, a.file.url
 p = link_to 'See answers', question_path(question)
 - if current_user
   - if question.user_id.equal? current_user.id
@@ -12,4 +15,4 @@ p = link_to 'See answers', question_path(question)
         = f.label :body, 'Text'
         = f.text_area :body
         = f.submit 'Save'
-    p = button_to 'Destroy question', question_path(question), method: :delete
+    p = button_to 'Destroy question', question_path(question), method: :delete, remote: true

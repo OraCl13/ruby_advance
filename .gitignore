@@ -18,5 +18,8 @@
 # config
 config/database.yml
 
-#idea
+# idea
 .idea
+
+# public
+public
