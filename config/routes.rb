@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :questions do
     resources :answers do
-      post :make_best
+      post :position_edit, :cancel_choice
     end
   end
   root to: "questions#index"

@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :destroy]
+  before_action :authenticate_user!, only: [:create, :destroy, :update, :cancel_choice ]
   # before_action :load_question, only: [ :new, :create ]
   # before_action :load_answer, only: [ :edit, :update, :destroy]
 
@@ -30,17 +30,53 @@ class AnswersController < ApplicationController
     @answer.destroy
   end
 
-  def make_best
+  def position_edit
     @question = Question.find(params[:question_id])
     @answer = Answer.find(params[:answer_id])
+    if (@answer.pos_answers_users + @answer.neg_answers_users).include? current_user.id
+      puts 'There are already your choice. Touch cancel to decline previous changes'
+    else
+      if params[:good]
+        @answer.pos_answers_users += [current_user.id]
+        puts 'Choosed good' * 30
+      elsif params[:bad]
+        @answer.neg_answers_users += [current_user.id]
+        puts 'Choosed bad' * 30
+      end
+      @answer.save
+    end
+  end
 
-    @question.answers.update_all(best_answer: false)
-    @answer.update(best_answer: true)
+  def cancel_choice
+    @question = Question.find(params[:question_id])
+    flag = false
+    if params[:cancel]
+      @question.answers.each do |answer|
+        if answer.pos_answers_users.include? current_user.id
+          answer.pos_answers_users -= [current_user.id]
+          answer.save
+          flag = true
+          break
+        elsif answer.neg_answers_users.include? current_user.id
+          answer.neg_answers_users -= [current_user.id]
+          answer.save
+          flag = true
+          break
+        end
+      end
+      unless flag
+        puts 'There are no' * 30
+        respond_to do |format|
+          format.html { render text: 'You dont make choice', status: :not_acceptable }
+          format.json { render text: ['You dont make choice'], status: :not_acceptable }
+        end
+      end
+    end
   end
 
   private
 
   def answer_params
-    params.require(:answer).permit(:body, attachments_attributes: [:file, :_destroy])
+    params.require(:answer).permit(:good, :bad, :cancel, :body, attachments_attributes: [:file, :_destroy])
   end
 end

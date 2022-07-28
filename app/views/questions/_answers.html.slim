@@ -1,14 +1,19 @@
 - @question.answers.each do |answer|
+  p Rate:
   - if answer.persisted?
+    p Body:
     p= answer.body
     ul
       -answer.attachments.each do |a|
         li= link_to a.file.identifier, a.file.url
     - if current_user
-      - if @question.user_id.equal? current_user.id
-        p = button_to 'Choose this best', question_answer_make_best_path(@question, answer),method: :post, remote: true
-        - if answer.best_answer
-          p BEST ANSWER
+      - unless answer.user_id.equal? current_user.id
+        p = button_to 'GOOD', question_answer_position_edit_path(@question, answer), method: :post,
+                remote: true, name: "good"
+        p = button_to 'BAD', question_answer_position_edit_path(@question, answer), method: :post,
+                remote: true, name: "bad"
+        p = button_to 'Cancel', question_answer_cancel_choice_path(@question, answer), method: :post,
+                remote: true, name: "cancel"
       - if answer.user_id.equal? current_user.id
         p = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
         p
