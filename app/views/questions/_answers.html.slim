@@ -1,6 +1,7 @@
 - @question.answers.each do |answer|
-  p Rate:
   - if answer.persisted?
+    p Rate:
+    strong= "#{answer.pos_answers_users.length}/#{answer.neg_answers_users.length}"
     p Body:
     p= answer.body
     ul

@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :destroy, :update, :cancel_choice ]
+  before_action :authenticate_user!, only: [:create, :destroy, :update, :cancel_choice]
   # before_action :load_question, only: [ :new, :create ]
   # before_action :load_answer, only: [ :edit, :update, :destroy]
 
@@ -33,18 +33,23 @@ class AnswersController < ApplicationController
   def position_edit
     @question = Question.find(params[:question_id])
     @answer = Answer.find(params[:answer_id])
-    if (@answer.pos_answers_users + @answer.neg_answers_users).include? current_user.id
-      puts 'There are already your choice. Touch cancel to decline previous changes'
-    else
-      if params[:good]
-        @answer.pos_answers_users += [current_user.id]
-        puts 'Choosed good' * 30
-      elsif params[:bad]
-        @answer.neg_answers_users += [current_user.id]
-        puts 'Choosed bad' * 30
+
+    flag = true
+    @question.answers.each do |answer|
+      if (answer.pos_answers_users + answer.neg_answers_users).include? current_user.id
+        flag = false
+        puts 'There are already your choice. Touch cancel to decline previous changes'
       end
-      @answer.save
     end
+    if params[:good] && flag
+      @answer.pos_answers_users += [current_user.id]
+      puts @answer.body
+      puts 'Choosed good' * 30
+    elsif params[:bad] && flag
+      @answer.neg_answers_users += [current_user.id]
+      puts 'Choosed bad' * 30
+    end
+    @answer.save
   end
 
   def cancel_choice
