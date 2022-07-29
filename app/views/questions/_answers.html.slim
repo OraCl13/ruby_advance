@@ -9,12 +9,13 @@
         li= link_to a.file.identifier, a.file.url
     - if current_user
       - unless answer.user_id.equal? current_user.id
-        p = button_to 'GOOD', question_answer_position_edit_path(@question, answer), method: :post,
-                remote: true, name: "good"
-        p = button_to 'BAD', question_answer_position_edit_path(@question, answer), method: :post,
-                remote: true, name: "bad"
-        p = button_to 'Cancel', question_answer_cancel_choice_path(@question, answer), method: :post,
-                remote: true, name: "cancel"
+        .position-answers-errors
+        p = button_to 'GOOD', question_answer_position_edit_path(@question, answer),
+                method: :post, remote: true, name: "good", form_class: 'change_pos'
+        p = button_to 'BAD', question_answer_position_edit_path(@question, answer),
+                method: :post, remote: true, name: "bad", form_class: 'change_pos'
+        p = button_to 'Cancel', question_answer_cancel_choice_path(@question, answer),
+                method: :post, remote: true, name: "cancel", form_class: 'cancel'
       - if answer.user_id.equal? current_user.id
         p = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
         p
@@ -23,4 +24,4 @@
             = f.text_area :body
             = f.submit 'Save'
         p = button_to 'Destroy answer', question_answer_path(@question, answer), method: :delete, remote: true
-        hr
+    hr

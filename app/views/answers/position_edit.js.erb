@@ -1,8 +1,2 @@
-<% if @answer.errors.present? %>
-  <% @answer.errors.full_messages.each do |message| %>
-    $('.answer-errors').html('<%= j message %>')
-  <% end %>
-<% else %>
-  console.log("POSITION CHANGED")
-  $('.answers').html('<%= j render 'questions/answers' %>');
-<% end %>
+console.log("Position changed")
+$('.answers').html('<%= j render 'questions/answers' %>');
