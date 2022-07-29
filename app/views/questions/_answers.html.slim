@@ -1,17 +1,20 @@
 - @question.answers.each do |answer|
   - if answer.persisted?
-    p Rate:
-    strong= "#{answer.pos_answers_users.length}/#{answer.neg_answers_users.length}"
-    p Body:
+    strong Rate:
+    p= "#{answer.pos_answers_users.length}/#{answer.neg_answers_users.length}"
+    strong Body:
     p= answer.body
+    strong Files:
     ul
       -answer.attachments.each do |a|
         li= link_to a.file.identifier, a.file.url
+      - if answer.attachments.empty?
+        li Empty file list
     - if current_user
       - unless answer.user_id.equal? current_user.id
         .position-answers-errors
         p = button_to 'GOOD', question_answer_position_edit_path(@question, answer),
-                method: :post, remote: true, name: "good", form_class: 'change_pos'
+                method: :post, remote: true, name: "good", form_class: 'change_pos', data: {type: "json"}
         p = button_to 'BAD', question_answer_position_edit_path(@question, answer),
                 method: :post, remote: true, name: "bad", form_class: 'change_pos'
         p = button_to 'Cancel', question_answer_cancel_choice_path(@question, answer),
