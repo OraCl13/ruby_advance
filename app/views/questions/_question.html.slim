@@ -1,6 +1,9 @@
 h2 Question
+strong Title:
 p = question.title
+strong Body:
 p = question.body
+strong Files:
 ul
   -question.attachments.each do |a|
     li= link_to a.file.identifier, a.file.url

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220726133100) do
+ActiveRecord::Schema.define(version: 20220728075736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,7 +22,8 @@ ActiveRecord::Schema.define(version: 20220726133100) do
     t.datetime "updated_at"
     t.integer  "reply_to_id"
     t.integer  "user_id"
-    t.boolean  "best_answer", default: false
+    t.integer  "pos_answers_users", default: [], array: true
+    t.integer  "neg_answers_users", default: [], array: true
   end
 
   create_table "attachments", force: true do |t|

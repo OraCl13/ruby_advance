@@ -7,9 +7,19 @@ $ ->
 
   $('form.new_answer').bind 'ajax:success', (e, data, status, xhr) ->
     answer = $.parseJSON(xhr.responseText)
-    $('.answers').append('<p>' + answer.body + '</p>')
+    $('.answers').append(
+      '<p>Rate</p>',
+      '<strong>'+"#{answer.pos_answers_users.length}/#{answer.neg_answers_users.length}" + '</strong>',
+      '<p>Body</p>',
+      '<p>' + answer.body + '</p>')
   .bind 'ajax:error', (e, xhr, status, error) ->
     errors = $.parseJSON(xhr.responseText)
     $.each errors, (index,value) ->
       $('.answer-errors').append(value)
+
+  $('form.cancel').bind 'ajax:error', (e, xhr, status, error) ->
+    $('.position-answers-errors').append(xhr.responseText)
+
+  $('form.change_pos').bind 'ajax:error', (e, xhr, status, error) ->
+    $('.position-answers-errors').append(xhr.responseText)
 
