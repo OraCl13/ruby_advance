@@ -10,7 +10,7 @@ ul
 p = link_to 'See answers', question_path(question)
 - if user
   - if question.user_id.equal? user.id
-    p = link_to 'Edit', '', class: 'edit-question-link', data: { question_id: question.id }
+    p = link_to 'Edit', '', class: 'edit-question-link', data: { question_id: question.id, user: user }
     p
       = form_for question, remote: true, html: { id: "edit-question-#{question.id}" } do |f|
         = f.label :title
