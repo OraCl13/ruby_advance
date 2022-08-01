@@ -1,5 +1,5 @@
-.questions
-  = link_to 'Ask question', new_question_path
-  h1 Questions
-  - for question in questions
-    = render 'question', question: question, user: current_user
+- for question in questions
+  .col-sm-6 style="max-width: 100%"
+    .card
+      .card-body
+        = render 'question', question: question, user: current_user

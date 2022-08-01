@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require_relative '../acceptance_helper'
 
 feature 'Delete question and answer', %q{
   In order to my answers and question not be deleted by another person

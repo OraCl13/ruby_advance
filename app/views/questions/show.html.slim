@@ -1,16 +1,19 @@
-strong Question title
-h5= @question.title
-strong Question body
-p= @question.body
-strong Question Attachments:
-ul
-  -@question.attachments.each do |a|
-    li= link_to a.file.identifier, a.file.url
-  -if @question.attachments.empty?
-    li Empty file list
-hr
-.answers
-  = render 'answers'
+.col-sm-6 style="max-width: 100%"
+  strong Question
+  .card
+    .card-body
+      strong Title
+      h5= @question.title
+      strong Body
+      p= @question.body
+      strong Attachments:
+      ul
+        -@question.attachments.each do |a|
+          li= link_to a.file.identifier, a.file.url
+        -if @question.attachments.empty?
+          li Empty file list
+      .answers
+        = render 'answers'
 
 = form_for [@question, @answer], remote: true, html: {id: @answer.id}, data: { type: :json } do |f|
   = f.label :body, 'Your answer'

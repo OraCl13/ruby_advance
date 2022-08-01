@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require_relative '../acceptance_helper'
 
 feature 'Create question', %q{
   In order to get answer from community
@@ -12,6 +12,16 @@ feature 'Create question', %q{
     sign_in(user)
     create_question
 
+    expect(page).to have_content 'Your question successfully created.'
+  end
+
+  scenario 'Authenticated user creates question with wrong params' do # save_and_open_page
+    sign_in(user)
+    click_on 'Ask question'
+    fill_in 'Title', with: ''
+    fill_in 'Text', with: ''
+    click_on 'Create'
+    save_and_open_page
     expect(page).to have_content 'Your question successfully created.'
   end
 

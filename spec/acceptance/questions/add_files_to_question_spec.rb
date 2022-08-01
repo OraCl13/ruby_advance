@@ -1,26 +1,25 @@
-require_relative 'acceptance_helper'
+require_relative '../acceptance_helper'
 
-feature 'Add files to answer', %q{
-  In order to show answer
-  As user
+feature 'Add files to quesiton', %q{
+  In order to show question 
+  As author
   Id like to be able to touch file
 } do
   given(:user) { create(:user) }
-  given(:question) { create(:question) }
   
   background do
     sign_in(user)
-    visit question_path(question)
+    visit new_question_path
   end
 
 
-  scenario 'Authenticated user adds file to answer', js: true do # save_and_open_page
-    fill_in 'Your answer', with: 'ANSWERANSWRR'# TODO
+  scenario 'Authenticated user adds file to qeustion' do # save_and_open_page
+    fill_in 'Title', with: 'Title_test'
+    fill_in 'Text', with: 'bodubodybody'
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
     attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
     click_on 'Create'
 
-    visit question_path(question)
     expect(page).to have_link 'spec_helper.rb', href: '/uploads/attachment/file/1/spec_helper.rb'
   end
 end
