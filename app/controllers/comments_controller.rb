@@ -2,14 +2,22 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, only: [:create]
 
   def create
-    puts 'z'*400
     if params[:question_id]
       @question = Question.find(params[:question_id])
-      @comment = @question.comments.create(comment_params)
-      puts 'y'*300
+      @comment = @question.comments.build(comment_params)
     else
       @answer = Answer.find(params[:answer_id])
-      @comment = @answer.comments.create(comment_params)
+      @comment = @answer.comments.build(comment_params)
+    end
+
+    respond_to do |format|
+      if @comment.save
+        format.html { render partial: 'questions/answers', layout: false }
+        format.json { render json: @comment }
+      else
+        format.html { render plain: @comment.errors.full_messages.join("\n"), status: :unprocessable_entity }
+        format.json { render plain: @comment.errors.full_messages, status: :unprocessable_entity }
+      end
     end
   end
 
