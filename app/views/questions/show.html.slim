@@ -14,15 +14,31 @@
           li Empty file list
       .answers
         = render 'answers'
+.col-sm-6 style="max-width: 100%"
+  strong Give answer
+  .card
+    .card-body
+      = form_for [@question, @answer], remote: true, html: {id: @answer.id}, data: { type: :json } do |f|
+        = f.label :body, 'Your answer'
+        .answer-errors
+        = f.text_area :body
+        p Add Attachments:
+        p
+          = f.fields_for :attachments, @answer do |a|
+            = render 'attachment_fields', f: a
+        p
+          = link_to_add_association "add file", f, :attachments
+        = f.submit 'Create', class: 'button_create'
 
-= form_for [@question, @answer], remote: true, html: {id: @answer.id}, data: { type: :json } do |f|
-  = f.label :body, 'Your answer'
-  .answer-errors
-  = f.text_area :body
-  p Add Attachments:
-  p
-    = f.fields_for :attachments, @answer do |a|
-      = render 'attachment_fields', f: a
-  p
-    = link_to_add_association "add file", f, :attachments
-  = f.submit 'Create', class: 'button_create'
+      hr
+
+      h4 Question Comments
+      - if !@question.comments[0].body.nil?
+        - @question.comments.each_with_index do |comment, index|
+          p="#{index+1}- #{comment.body}" if comment.body
+      - else
+        p There are no comments, be first who write smth
+      = form_for [@question, @comment], remote: true do |f| #data: { type: :json }
+        = f.label :body, "|"
+        = f.text_area :body
+        = f.submit 'Create'
