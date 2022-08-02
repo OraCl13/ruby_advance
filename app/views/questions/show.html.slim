@@ -25,4 +25,4 @@
       = render 'attachment_fields', f: a
   p
     = link_to_add_association "add file", f, :attachments
-  = f.submit 'Create'
+  = f.submit 'Create', class: 'button_create'

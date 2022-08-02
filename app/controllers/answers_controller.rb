@@ -10,8 +10,8 @@ class AnswersController < ApplicationController
         format.html { render partial: 'questions/answers', layout: false }
         format.json { render json: @answer }
       else
-        format.html { render text: @answer.errors.full_messages.join("\n"), status: :unprocessable_entity }
-        format.json { render text: @answer.errors.full_messages, status: :unprocessable_entity }
+        format.html { render plain: @answer.errors.full_messages.join("\n"), status: :unprocessable_entity }
+        format.json { render plain: @answer.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end
