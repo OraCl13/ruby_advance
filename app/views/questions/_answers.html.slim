@@ -27,7 +27,7 @@ hr
             = f.label :body, 'Answer'
             = f.text_area :body
             = f.submit 'Save'
-
+          = button_to 'Destroy answer', question_answer_path(question, answer), method: :delete, remote: true
           hr
           h4 Answer Comments
         .answer_comments
@@ -44,5 +44,4 @@ hr
               = f.text_area :body
               = f.submit 'Create'
         hr
-        p = button_to 'Destroy answer', question_answer_path(question, answer), method: :delete, remote: true
     hr

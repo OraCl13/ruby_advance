@@ -26,7 +26,6 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id]) if params[:question_comment_destroy]
     @comment.destroy
 
-
     respond_to do |format|
       format.html { render partial: 'questions/answers', layout: false }
       format.js
