@@ -13,7 +13,7 @@
         -if @question.attachments.empty?
           li Empty file list
       .answers
-        = render 'answers'
+        = render 'answers', question: @question
 .col-sm-6 style="max-width: 100%"
   strong Give answer
   .card
@@ -34,12 +34,12 @@
       h4 Question Comments
       .comments
         - if !@question.comments[0].body.nil?
-          - @question.comments.each do |comment|
-            p=comment.body if comment.body
-            hr
+          - @question.comments[0..-2].each do |comment|
+            =render 'questions/comments', comment: comment, question: @question
         - else
           p There are no comments, be first who write smth
-      = form_for [@question, @comment], remote: true, data: { type: :json }, html: {id: @comment.id}  do |f|
-        = f.label :body, "|"
+      = form_for [@question, @question_comment], remote: true, data: { type: :json }, html: {id: @question_comment.id} do |f|
+        = f.hidden_field :is_question?, value: true
+        = f.label :body, "."
         = f.text_area :body
         = f.submit 'Create'

@@ -1,13 +1,13 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: [:create]
+  before_action :authenticate_user!, only: [ :create, :destroy ]
+  before_action :find_question, only: %i[ create ]
+  before_action :find_answer, only: %i[ create ]
 
   def create
-    if params[:question_id]
-      @question = Question.find(params[:question_id])
-      @comment = @question.comments.build(comment_params)
+    if comment_params[:is_question] == 'true'
+      @comment = @question.comments.build(comment_params.except!(:is_question))
     else
-      @answer = Answer.find(params[:answer_id])
-      @comment = @answer.comments.build(comment_params)
+      @comment = @answer.comments.build(comment_params.except!(:is_question))
     end
 
     respond_to do |format|
@@ -21,9 +21,22 @@ class CommentsController < ApplicationController
     end
   end
 
+  def destroy
+    @comment = Comment.find(params[:format])
+    @comment.destroy
+  end
+
   private
 
+  def find_question
+    @question = Question.find(params[:question_id]) if params[:question_id]
+  end
+
+  def find_answer
+    @answer = Answer.find(params[:answer_id]) if params[:answer_id]
+  end
+
   def comment_params
-    params.require(:comment).permit(:body, :article_id, :article_type)
+    params.require(:comment).permit(:body, :article_id, :article_type, :is_question)
   end
 end

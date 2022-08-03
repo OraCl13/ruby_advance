@@ -23,8 +23,6 @@ $ ->
   $('form.change_pos').bind 'ajax:error', (e, xhr, status, error) ->
     $('.position-answers-errors').append(xhr.responseText)
 
-  $('.button_create').on 'click', () ->
-    $('#answer_body').val('')
 
 
 

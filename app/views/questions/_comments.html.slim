@@ -1,0 +1,8 @@
+-if defined? answer
+  p=comment.body
+  =button_to 'Destroy comment', question_comment_path(question, answer, comment), method: :delete, remote: true
+  hr
+-else
+  p= comment.body
+  = button_to 'Destroy comment', question_comment_path(question, comment), method: :delete, remote: true
+  hr

@@ -19,3 +19,12 @@ p = link_to 'See answers', question_path(question)
         p= f.text_area :body
         = f.submit 'Save'
     p = button_to 'Destroy question', question_path(question), method: :delete, remote: true
+
+    hr
+    h4 Question Comments
+    .comments
+      - if !question.comments[0].nil?
+        - question.comments.each do |comment|
+          = render 'questions/comments', comment: comment, question: question
+      - else
+        p There are no comments, be first who write smth

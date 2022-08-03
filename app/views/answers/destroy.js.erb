@@ -3,7 +3,7 @@
     $('.answer-errors').html('<%= j message %>')
   <% end %>
 <% else %>
-  console.log("DESTROY")
-  $('.answers').html('<%= j render 'questions/answers' %>');
+  console.log("DESTROY ANSWER")
+  $('.answers').html('<%= j render 'questions/answers', question: @question %>');
   $('#answer_body').val('');
 <% end %>
