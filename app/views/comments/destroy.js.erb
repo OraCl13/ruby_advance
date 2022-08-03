@@ -1,8 +1,2 @@
-<% if @comment.errors.present? %>
-  <% @comment.errors.full_messages.each do |message| %>
-    $('.answer-errors').html('<%= j message %>')
-  <% end %>
-<% else %>
-  console.log("DESTROY COMMENT")
-  $('.comments').html('<%= j render 'questions/comments', question: @question, comment: @comment %>');
-<% end %>
+console.log("DESTROY COMMENT");
+$("div.comment_<%= @comment.id %>").remove();

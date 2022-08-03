@@ -30,13 +30,15 @@ hr
 
           hr
           h4 Answer Comments
-          .answer_comments
+        .answer_comments
+          div class="answer_comments_#{answer.id}"
             - if !answer.comments[0].nil?
               - answer.comments.each do |comment|
                 = render 'questions/comments', comment: comment, answer: answer, question: question
             - else
               p There are no comments, be first who write smth
-            = form_for [question, answer, @answer_comment], remote: true, data: { type: :json }, html: { id: @answer_comment.id } do |f|
+            = form_for [question, answer, @answer_comment], remote: true, data: { type: :json },
+                    html: { class: "new_answer_comment" } do |f|
               = f.hidden_field :is_question?, value: false
               = f.label :body, "."
               = f.text_area :body

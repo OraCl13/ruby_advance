@@ -32,7 +32,7 @@
 
       hr
       h4 Question Comments
-      .comments
+      .question_comments
         - if !@question.comments[0].body.nil?
           - @question.comments[0..-2].each do |comment|
             =render 'questions/comments', comment: comment, question: @question

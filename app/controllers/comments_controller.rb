@@ -22,8 +22,15 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment = Comment.find(params[:format])
+    @comment = Comment.find(params[:id]) if params[:answer_comment_destroy]
+    @comment = Comment.find(params[:id]) if params[:question_comment_destroy]
     @comment.destroy
+
+
+    respond_to do |format|
+      format.html { render partial: 'questions/answers', layout: false }
+      format.js
+    end
   end
 
   private
