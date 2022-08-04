@@ -1,12 +1,15 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: [:create, :destroy, :update, :cancel_choice, :position_edit]
+  after_action :publish_answer, only: [:create]
 
+  @@last_created_answer = nil
   def create
     @question = Question.find(params[:question_id])
     @answer = @question.answers.build(answer_params.merge(user_id: current_user.id))
 
     respond_to do |format|
       if @answer.save
+        @@last_created_answer = @answer
         format.html { render partial: 'questions/answers', layout: false }
         format.json { render json: @answer }
         format.js { render :create }
@@ -83,7 +86,18 @@ class AnswersController < ApplicationController
       end
     end
   end
+
   private
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast 'answers',
+                                 ApplicationController.render(
+                                   partial: 'questions/answer',
+                                   locals: { user: current_user,
+                                             answer: @@last_created_answer })
+  end
 
   def answer_params
     params.require(:answer).permit(:good, :bad, :cancel, :body, attachments_attributes: [:file, :_destroy])

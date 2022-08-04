@@ -1,0 +1,11 @@
+- if answer.persisted?
+  strong Rate:
+  p= "#{answer.pos_answers_users.length}/#{answer.neg_answers_users.length}"
+  strong Body:
+  p= answer.body
+  strong Files:
+  ul
+    -answer.attachments.each do |a|
+      li= link_to a.file.identifier, a.file.url
+    - if answer.attachments.empty?
+      li Empty file list

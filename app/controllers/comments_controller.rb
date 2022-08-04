@@ -1,13 +1,14 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: [ :create, :destroy ]
-  before_action :find_question, only: %i[ create ]
+  before_action :authenticate_user!, only: [:create, :destroy]
+  before_action :find_question, only: %i[ create publish_comment ]
   before_action :find_answer, only: %i[ create ]
+  after_action :publish_comment, only: [:create]
 
   def create
     if comment_params[:is_question] == 'true'
-      @comment = @question.comments.build(comment_params.except!(:is_question))
+      @comment = @question.comments.build(comment_params.except!(:is_question).merge(user_id: current_user.id))
     else
-      @comment = @answer.comments.build(comment_params.except!(:is_question))
+      @comment = @answer.comments.build(comment_params.except!(:is_question).merge(user_id: current_user.id))
     end
 
     respond_to do |format|
@@ -41,6 +42,33 @@ class CommentsController < ApplicationController
   def find_answer
     @answer = Answer.find(params[:answer_id]) if params[:answer_id]
   end
+
+  def publish_comment
+    return if @comment.errors.any?
+    if @comment.article_type == 'Question'
+      ActionCable.server.broadcast 'question_comments',
+                                   ApplicationController.render(
+                                     partial: 'questions/comments',
+                                     locals: { question: @question,
+                                               answer: @comment.article_id, comment: @comment })
+    else
+      ActionCable.server.broadcast 'answer_comments',
+                                   ApplicationController.render(
+                                     partial: 'questions/comments',
+                                     locals: { question: @question,
+                                               answer: @comment.article_id, comment: @comment })
+    end
+  end
+
+  # def publish_answer_comment
+  #   return if @comment.errors.any?
+  #
+  #   ActionCable.server.broadcast 'answer_comments',
+  #                                ApplicationController.render(
+  #                                  partial: 'questions/comments',
+  #                                  locals: { question: @question,
+  #                                            answer: @comment.article_id, comment: @comment })
+  # end
 
   def comment_params
     params.require(:comment).permit(:body, :article_id, :article_type, :is_question)

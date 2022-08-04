@@ -13,7 +13,7 @@
         -if @question.attachments.empty?
           li Empty file list
       .answers
-        = render 'answers', question: @question
+        = render 'answers', question: @question, user: current_user
 .col-sm-6 style="max-width: 100%"
   strong Give answer
   .card
