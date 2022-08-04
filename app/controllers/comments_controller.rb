@@ -50,25 +50,19 @@ class CommentsController < ApplicationController
                                    ApplicationController.render(
                                      partial: 'questions/comments',
                                      locals: { question: @question,
-                                               answer: @comment.article_id, comment: @comment })
+                                               answer: @comment.article_id,
+                                               comment: @comment,
+                                               user: current_user})
     else
       ActionCable.server.broadcast 'answer_comments',
                                    ApplicationController.render(
                                      partial: 'questions/comments',
                                      locals: { question: @question,
-                                               answer: @comment.article_id, comment: @comment })
+                                               answer: @comment.article_id,
+                                               comment: @comment,
+                                               user: current_user })
     end
   end
-
-  # def publish_answer_comment
-  #   return if @comment.errors.any?
-  #
-  #   ActionCable.server.broadcast 'answer_comments',
-  #                                ApplicationController.render(
-  #                                  partial: 'questions/comments',
-  #                                  locals: { question: @question,
-  #                                            answer: @comment.article_id, comment: @comment })
-  # end
 
   def comment_params
     params.require(:comment).permit(:body, :article_id, :article_type, :is_question)

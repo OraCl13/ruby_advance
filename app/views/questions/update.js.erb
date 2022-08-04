@@ -5,7 +5,4 @@ $('.edit-question-link').click(function(e) {
     question_id = $(this).data('questionId');
     console.log(question_id)
     $('form#edit-question-' + question_id).show();
-    $('form#edit-question-' + question_id).submit(function(){
-        $(this).hide();
-    })
 });
