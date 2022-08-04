@@ -1,5 +1,3 @@
 - for question in questions
   .col-sm-6 style="max-width: 100%"
-    .card
-      .card-body
-        = render 'question', question: question, user: current_user
+    = render 'question', question: question, user: current_user

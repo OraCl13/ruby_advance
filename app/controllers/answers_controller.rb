@@ -11,7 +11,7 @@ class AnswersController < ApplicationController
       if @answer.save
         @@last_created_answer = @answer
         format.html { render partial: 'questions/answers', layout: false }
-        format.json { render json: @answer }
+        format.json { render json: [@answer, @answer.attachments] }
         format.js { render :create }
       else
         format.html { render plain: @answer.errors.full_messages.join("\n"), status: :unprocessable_entity }
@@ -96,7 +96,7 @@ class AnswersController < ApplicationController
                                  ApplicationController.render(
                                    partial: 'questions/answer',
                                    locals: { user: current_user,
-                                             answer: @@last_created_answer })
+                                             answer: @@last_created_answer }) # TODO @@last change
   end
 
   def answer_params
