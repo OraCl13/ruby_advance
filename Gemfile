@@ -48,6 +48,7 @@ group :test, :development do
   gem 'capybara'
   gem 'pry'
   gem 'capybara-webkit'
+  gem 'rails-controller-testing'
 end
 
 group :test do

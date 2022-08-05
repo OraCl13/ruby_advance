@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :load_question, only: [ :show, :edit, :update, :destroy]
   after_action :publish_question, only: [:create]
+  protect_from_forgery except: :update
 
   def index
     @questions = Question.all
