@@ -5,7 +5,6 @@ $ ->
     $(this).hide();
     answer_id = $(this).data('answerId')
     $('form#edit-answer-' + answer_id).show();
-    console.log(111)
 
   $('form.cancel').bind 'ajax:error', (e, xhr, status, error) ->
     $('.position-answers-errors').append(xhr.responseText)

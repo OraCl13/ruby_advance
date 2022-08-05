@@ -1,0 +1,10 @@
+data = $('.change_pos').parent().find('.pos_answer_count').html();
+pos_len = <%= @answer.pos_answers_users.length %>
+if (pos_len != data) {
+    $('.change_pos').parent().find('.pos_answer_count').html(parseInt(data) + 1)
+} else {
+    data = $('.change_pos').parent().find('.neg_answer_count').html();
+    $('.change_pos').parent().find('.neg_answer_count').html(parseInt(data) + 1)
+}
+
+

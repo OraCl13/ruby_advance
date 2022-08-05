@@ -9,10 +9,12 @@
       li= link_to a.file.identifier, a.file.url
     - if answer.attachments.empty?
       li Empty file list
-  / p = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
-  / p
-  /   = form_for [question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
-  /     = f.label :body, 'Answer'
-  /     = f.text_area :body
-  /     = f.submit 'Save'
-  /   = button_to 'Destroy answer', question_answer_path(question, answer), method: :delete, remote: true
+  hr
+  h4 Answer Comments
+  .answer_comments
+    div class="answer_comments_#{answer.id}"
+      - if !answer.comments[0].nil?
+        - answer.comments.each do |comment|
+          = render 'questions/comments', comment: comment, answer: answer, question: question, user: user
+      - else
+        p There are no comments, be first who write smth

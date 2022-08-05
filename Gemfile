@@ -58,4 +58,5 @@ end
 group :development do
   gem 'spring'
   gem 'puma'
+  gem 'rubocop-rails', require: false
 end

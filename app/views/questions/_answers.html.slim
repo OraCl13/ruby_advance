@@ -2,9 +2,11 @@ hr
 - question.answers.each do |answer|
   div class= "answer_#{answer.id}"
     - if answer.persisted?
-      strong Rate:
-      p= "#{answer.pos_answers_users.length}/#{answer.neg_answers_users.length}"
-      strong Body:
+      strong style="display: inline-block;" Rate:
+      p style="display: inline-block;" class="pos_answer_count" = "#{answer.pos_answers_users.length}"
+      p style="display: inline-block;" ||
+      p style="display: inline-block;" class="neg_answer_count" = "#{answer.neg_answers_users.length}"
+      h4 Body:
       p class="answer_body" = answer.body
       strong Files:
       ul
@@ -15,10 +17,10 @@ hr
       - if user
         - unless answer.user_id.equal? user.id
           .position-answers-errors
-          p = button_to 'GOOD', question_answer_position_edit_path(question, answer),
-                method: :post, remote: true, name: "good", form_class: 'change_pos', data: { type: "json" }
-          p = button_to 'BAD', question_answer_position_edit_path(question, answer),
-                method: :post, remote: true, name: "bad", form_class: 'change_pos'
+          p = button_to 'Like', question_answer_position_edit_path(question, answer),
+                method: :post, remote: true, name: "choice", form_class: 'change_pos'
+          p = button_to 'Dislike', question_answer_position_edit_path(question, answer),
+                method: :post, remote: true, name: "choice", form_class: 'change_pos'
           p = button_to 'Cancel', question_answer_cancel_choice_path(question, answer),
                 method: :post, remote: true, name: "cancel", form_class: 'cancel'
         - if answer.user_id.equal? user.id
@@ -29,20 +31,21 @@ hr
               = f.text_area :body
               = f.submit 'Save'
             = button_to 'Destroy answer', question_answer_path(question, answer), method: :delete, remote: true
-        hr
-        h4 Answer Comments
-        .answer_comments
-          div class="answer_comments_#{answer.id}"
-            - if !answer.comments[0].nil?
-              - answer.comments.each do |comment|
-                = render 'questions/comments', comment: comment, answer: answer, question: question, user: user
-            - else
-              p There are no comments, be first who write smth
-        = form_for [question, answer, @answer_comment], remote: true, data: { type: :json },
-              html: { class: "new_answer_comment" } do |f|
-          = f.hidden_field :is_question?, value: false
-          = f.label :body, "."
-          = f.text_area :body
-          = f.submit 'Create'
-        hr
       hr
+      h4 Answer Comments
+      .answer_comments
+        div class="answer_comments_#{answer.id}"
+          - if !answer.comments[0].nil?
+            - answer.comments.each do |comment|
+              = render 'questions/comments', comment: comment, answer: answer, question: question, user: user
+          - else
+            p There are no comments, be first who write smth
+      = form_for [question, answer, defined?(@answer_comment).nil? ? answer_comment : @answer_comment],
+              remote: true, data: { type: :json },
+            html: { class: "new_answer_comment" } do |f|
+        = f.hidden_field :is_question?, value: false
+        = f.label :body, "."
+        = f.text_area :body
+        = f.submit 'Create'
+      hr
+    hr
