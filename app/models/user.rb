@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable, :omniauthable, omniauth_providers: [:facebook]
 
-  has_many :authorizations
+  has_many :authorizations, dependent: :destroy
 
   def self.find_for_oauth(auth)
     authorization = Authorization.where(provider: auth.provider, uid: auth.uid.to_s).first
@@ -12,18 +12,11 @@ class User < ApplicationRecord
 
     email = auth.info[:email]
     user = User.where(email: email).first
-    if user
-      user.create_authorization(auth)
-    else
+    unless user
       password = Devise.friendly_token[0, 20]
       user = User.create!(email: email, password: password, password_confirmation: password)
-      user.create_authorization(auth)
     end
-
+    user.authorizations.create(provider: auth.provider, uid: auth.uid)
     user
-  end
-
-  def create_authorization(auth)
-    self.authorizations.create(provider: auth.provider, uid: auth.uid)
   end
 end
