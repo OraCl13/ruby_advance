@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :destroy, :update, :cancel_choice, :position_edit]
+  before_action :authenticate_user!, only: %i[create destroy update cancel_choice position_edit]
   after_action :publish_answer, only: [:create]
 
   def create
@@ -34,13 +34,13 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:answer_id])
 
     @question.answers.each do |answer|
-      if (answer.pos_answers_users + answer.neg_answers_users).include? current_user.id
-        respond_to do |format|
-          format.html { render text: 'You already made choice', status: :not_acceptable }
-          format.json { render text: ['You already made choice'], status: :not_acceptable }
-        end
-        return
+      next unless (answer.pos_answers_users + answer.neg_answers_users).include? current_user.id
+
+      respond_to do |format|
+        format.html { render text: 'You already made choice', status: :not_acceptable }
+        format.json { render text: ['You already made choice'], status: :not_acceptable }
       end
+      return
     end
     @answer.pos_answers_users += [current_user.id] if params[:choice] == 'Like'
     @answer.neg_answers_users += [current_user.id] if params[:choice] == 'Dislike'
@@ -53,20 +53,19 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:answer_id])
     contains_user = false
 
-    if params[:cancel]
-      @question.answers.each do |answer|
-        if answer.pos_answers_users.include? current_user.id
-          puts ''
-          answer.pos_answers_users -= [current_user.id]
-          answer.save
-          contains_user = true
-          break
-        elsif answer.neg_answers_users.include? current_user.id
-          answer.neg_answers_users -= [current_user.id]
-          answer.save
-          contains_user = true
-          break
-        end
+    return unless params[:cancel]
+
+    @question.answers.each do |answer|
+      if answer.pos_answers_users.include? current_user.id
+        answer.pos_answers_users -= [current_user.id]
+        answer.save
+        contains_user = true
+        break
+      elsif answer.neg_answers_users.include? current_user.id
+        answer.neg_answers_users -= [current_user.id]
+        answer.save
+        contains_user = true
+        break
       end
 
       unless contains_user
@@ -92,6 +91,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:good, :bad, :cancel, :body, attachments_attributes: [:file, :_destroy])
+    params.require(:answer).permit(:good, :bad, :cancel, :body, attachments_attributes: %i[file _destroy])
   end
 end

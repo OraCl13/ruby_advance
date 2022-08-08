@@ -12,7 +12,7 @@ feature 'User sign_out', %q{
     sign_in(user)
 
     expect(page).to have_content 'Signed in successfully.'
-    click_on 'Вихід'
+    click_on 'Exit'
     expect(page).to have_content 'Signed out successfully.'
   end
 

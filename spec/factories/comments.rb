@@ -1,9 +1,9 @@
 FactoryBot.define do
   factory :comment do
-    body { "MyText" }
+    body { 'COMMENT' }
   end
 
   factory :invalid_comment, class: Comment do
-    body { "" }
+    body { '' }
   end
 end

@@ -25,6 +25,7 @@ hr
                 method: :post, remote: true, name: "cancel", form_class: 'cancel'
         - if answer.user_id.equal? user.id
           p = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+          .answer-errors
           p
             = form_for [question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
               = f.label :body, 'Answer'

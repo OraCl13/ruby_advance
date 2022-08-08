@@ -1,15 +1,15 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :destroy]
-  before_action :find_question, only: %i[ create publish_comment ]
-  before_action :find_answer, only: %i[ create ]
+  before_action :authenticate_user!, only: %i[create destroy]
+  before_action :find_question, only: %i[create publish_comment]
+  before_action :find_answer, only: %i[create]
   after_action :publish_comment, only: [:create]
 
   def create
-    if comment_params[:is_question] == 'true'
-      @comment = @question.comments.build(comment_params.except!(:is_question).merge(user_id: current_user.id))
-    else
-      @comment = @answer.comments.build(comment_params.except!(:is_question).merge(user_id: current_user.id))
-    end
+    @comment = if comment_params[:is_question] == 'true'
+                 @question.comments.build(comment_params.except!(:is_question).merge(user_id: current_user.id))
+               else
+                 @answer.comments.build(comment_params.except!(:is_question).merge(user_id: current_user.id))
+               end
 
     respond_to do |format|
       if @comment.save
@@ -45,6 +45,7 @@ class CommentsController < ApplicationController
 
   def publish_comment
     return if @comment.errors.any?
+
     if @comment.article_type == 'Question'
       ActionCable.server.broadcast 'question_comments',
                                    ApplicationController.render(
@@ -52,7 +53,8 @@ class CommentsController < ApplicationController
                                      locals: { question: @question,
                                                answer: @comment.article_id,
                                                comment: @comment,
-                                               user: current_user})
+                                               user: current_user }
+)
     else
       ActionCable.server.broadcast 'answer_comments',
                                    ApplicationController.render(
@@ -60,7 +62,8 @@ class CommentsController < ApplicationController
                                      locals: { question: @question,
                                                answer: @comment.article_id,
                                                comment: @comment,
-                                               user: current_user })
+                                               user: current_user }
+)
     end
   end
 
