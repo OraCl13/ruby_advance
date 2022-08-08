@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require_relative '../acceptance_helper'
 
 feature 'Create question', %q{
   In order to get answer from community
@@ -8,11 +8,21 @@ feature 'Create question', %q{
 
   given(:user) { create(:user) }
 
-  scenario 'Authenticated user creates question' do # save_and_open_page
+  scenario 'Authenticated user creates question' do
     sign_in(user)
     create_question
 
     expect(page).to have_content 'Your question successfully created.'
+  end
+
+  scenario 'Authenticated user creates question with wrong params' do
+    sign_in(user)
+    click_on 'Ask question'
+    fill_in 'Title', with: ''
+    fill_in 'Text', with: ''
+    click_on 'Create'
+
+    expect(page).to have_content 'Your question wasnt created'
   end
 
   scenario 'Non-authenticated user tries to create question' do

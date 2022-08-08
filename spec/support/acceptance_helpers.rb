@@ -14,6 +14,7 @@ module AcceptanceMacros
   end
 
   def create_answer
+    save_and_open_page
     fill_in 'Your answer', with: 'bodubodybody'
     click_on 'Create'
   end

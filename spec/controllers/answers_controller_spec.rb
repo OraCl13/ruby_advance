@@ -10,9 +10,9 @@ RSpec.describe AnswersController, type: :controller do
                       format: :json }.to change(question.answers, :count).by(1)
       end
 
-      it 'render create template' do
+      it 'return json response' do
         post :create, answer: attributes_for(:answer), question_id: question, format: :json
-        expect(response).to render_template nil
+        expect(response.content_type).to eq("application/json")
       end
     end
 

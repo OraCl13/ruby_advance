@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require_relative '../acceptance_helper'
 
 feature 'Create Answer', %q{
   In order to get info from community
@@ -9,12 +9,14 @@ feature 'Create Answer', %q{
   given(:user) { create(:user) }
   given!(:question) { create(:question) }
 
-  scenario 'Authenticated user create answer', js: true do # TODO
+  scenario 'Authenticated user create answer', js: true do
     sign_in(user)
     visit question_path(question)
 
     fill_in 'Your answer', with: 'My answer'
-    click_on 'Create'
+    within find('.new_answer') do
+      click_on 'Create'
+    end
 
     expect(current_path).to eq question_path(question)
     within '.answers' do
@@ -25,8 +27,9 @@ feature 'Create Answer', %q{
   scenario 'User try to create invalid answer', js: true do
     sign_in(user)
     visit question_path(question)
-    click_on 'Create'
-
+    within find('.new_answer') do
+      click_on 'Create'
+    end
     expect(page).to have_content "Body can't be blank"
   end
 end

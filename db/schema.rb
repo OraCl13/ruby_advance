@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,33 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20220728075736) do
+ActiveRecord::Schema.define(version: 20220804082044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "answers", force: true do |t|
+  create_table "answers", force: :cascade do |t|
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "reply_to_id"
     t.integer  "user_id"
-    t.integer  "pos_answers_users", default: [], array: true
-    t.integer  "neg_answers_users", default: [], array: true
+    t.boolean  "best_answer",       default: false
+    t.integer  "pos_answers_users", default: [],    array: true
+    t.integer  "neg_answers_users", default: [],    array: true
   end
 
-  create_table "attachments", force: true do |t|
+  create_table "attachments", force: :cascade do |t|
     t.string   "file"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "attachmentable_id"
     t.string   "attachmentable_type"
+    t.index ["attachmentable_id"], name: "index_attachments_on_attachmentable_id", using: :btree
+    t.index ["attachmentable_type"], name: "index_attachments_on_attachmentable_type", using: :btree
   end
 
-  add_index "attachments", ["attachmentable_id"], name: "index_attachments_on_attachmentable_id", using: :btree
-  add_index "attachments", ["attachmentable_type"], name: "index_attachments_on_attachmentable_type", using: :btree
+  create_table "comments", force: :cascade do |t|
+    t.text     "body"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "article_type"
+    t.integer  "article_id"
+    t.integer  "user_id"
+  end
 
-  create_table "questions", force: true do |t|
+  create_table "questions", force: :cascade do |t|
     t.string   "title"
     t.text     "body"
     t.datetime "created_at"
@@ -45,7 +53,7 @@ ActiveRecord::Schema.define(version: 20220728075736) do
     t.integer  "user_id"
   end
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email",                  default: "", null: false
@@ -57,9 +65,8 @@ ActiveRecord::Schema.define(version: 20220728075736) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "unconfirmed_email"
+    t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
-
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end

@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require_relative '../acceptance_helper'
 
 feature 'Add files to quesiton', %q{
   In order to show question 

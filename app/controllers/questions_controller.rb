@@ -1,6 +1,8 @@
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, only: [ :new, :create, :edit, :update, :destroy ]
-  before_action :load_question, only: [ :show, :edit, :update, :destroy ]
+  before_action :authenticate_user!, only: %i[new create edit update destroy]
+  before_action :load_question, only: %i[show edit update destroy]
+  after_action :publish_question, only: [:create]
+  protect_from_forgery except: :update
 
   def index
     @questions = Question.all
@@ -8,6 +10,8 @@ class QuestionsController < ApplicationController
 
   def show
     @answer = @question.answers.build
+    @question_comment = @question.comments.build if @question
+    @answer_comment = @answer.comments.build if @answer
     @answer.attachments.build
   end
 
@@ -24,8 +28,9 @@ class QuestionsController < ApplicationController
     @question.user_id = current_user.id
     if @question.save
       flash[:notice] = 'Your question successfully created.'
-      redirect_to @question
+      redirect_to questions_path
     else
+      flash[:notice] = 'Your question wasnt created'
       render :new
     end
   end
@@ -44,6 +49,16 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.find(params[:id])
+  end
+
+  def publish_question
+    return if @question.errors.any?
+
+    ActionCable.server.broadcast 'questions',
+                                 ApplicationController.render(
+                                   partial: 'questions/question',
+                                   locals: { question: @question, user: current_user }
+                                 )
   end
 
   def question_params

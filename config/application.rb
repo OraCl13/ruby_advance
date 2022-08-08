@@ -1,4 +1,4 @@
-require File.expand_path('../boot', __FILE__)
+require_relative 'boot'
 
 require 'rails/all'
 
@@ -18,5 +18,7 @@ module Qna2
                        controller_specs: true
       g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
+
+    config.action_cable.disable_request_forgery_protection = false
   end
 end

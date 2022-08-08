@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require_relative '../acceptance_helper'
 
 feature 'User sign_in', %q{
  In order to be able to ask question
@@ -21,7 +21,6 @@ feature 'User sign_in', %q{
     fill_in 'Password', with: '87654321'
     click_on 'Log in'
 
-    expect(page).to have_content 'Invalid email or password.'
     expect(current_path).to eq new_user_session_path
   end
 

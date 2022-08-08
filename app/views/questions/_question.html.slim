@@ -1,21 +1,32 @@
-h2 Question
-strong Title:
-p = question.title
-strong Body:
-p = question.body
-strong Files:
-ul
-  -question.attachments.each do |a|
-    li= link_to a.file.identifier, a.file.url
-p = link_to 'See answers', question_path(question)
-- if current_user
-  - if question.user_id.equal? current_user.id
-    p = link_to 'Edit', '', class: 'edit-question-link', data: { question_id: question.id }
-    p
-      = form_for question, remote: true, html: { id: "edit-question-#{question.id}" } do |f|
-        = f.label :title
-        = f.text_field :title
-        = f.label :body, 'Text'
-        = f.text_area :body
-        = f.submit 'Save'
-    p = button_to 'Destroy question', question_path(question), method: :delete, remote: true
+.card
+  .card-body
+    h2 Question
+    strong Title:
+    p = question.title
+    strong Body:
+    p = question.body
+    strong Files:
+    ul
+      - question.attachments.each do |a|
+        li= link_to a.file.identifier, a.file.url
+    p = link_to 'See answers', question_path(question)
+    - if user
+      - if question.user_id.equal? user.id
+        p = link_to 'Edit', '', class: 'edit-question-link', data: { question_id: question.id, user: user }
+        p
+          = form_for question, remote: true, html: { id: "edit-question-#{question.id}" } do |f|
+            = f.label :title
+            p= f.text_field :title
+            = f.label :body, 'Text'
+            p= f.text_area :body
+            = f.submit 'Save'
+        p = button_to 'Destroy question', question_path(question), method: :delete, remote: true
+
+      hr
+      h4 Question Comments
+      .comments
+        - if !question.comments[0].nil?
+          - question.comments.each do |comment|
+            = render 'questions/comments', comment: comment, question: question, user: user
+        - else
+          p There are no comments, be first who write smth

@@ -1,4 +1,4 @@
-require_relative 'acceptance_helper'
+require_relative '../acceptance_helper'
 
 feature 'User sign_out', %q{
  In order to be able to not show his identity
@@ -12,7 +12,7 @@ feature 'User sign_out', %q{
     sign_in(user)
 
     expect(page).to have_content 'Signed in successfully.'
-    click_on 'Вихід'
+    click_on 'Exit'
     expect(page).to have_content 'Signed out successfully.'
   end
 
