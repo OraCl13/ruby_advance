@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  default_url_options host: "localhost"
-  devise_for :users
+  default_url_options host: 'localhost'
+  devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   resources :questions do
     resources :answers do
@@ -9,6 +9,6 @@ Rails.application.routes.draw do
     end
     resources :comments
   end
-  root to: "questions#index"
+  root to: 'questions#index'
   mount ActionCable.server => '/cable'
 end

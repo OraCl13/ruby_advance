@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 
@@ -23,7 +25,7 @@ gem 'jbuilder'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc',  group: :doc
 
-gem "slim-rails"
+gem 'slim-rails'
 
 gem 'devise'
 
@@ -33,22 +35,28 @@ gem 'carrierwave'
 
 gem 'remotipart'
 
-gem "cocoon"
+gem 'cocoon'
 
 gem 'webpacker', '~>3.0'
 
 gem 'psych', '< 4'
 
+gem 'omniauth'
+
+gem 'omniauth-facebook'
+
+gem "omniauth-rails_csrf_protection"
+
 group :test, :development do
-  gem 'rspec-rails'
-  gem 'factory_bot_rails'
-  gem 'letter_opener'
-  gem 'database_cleaner'
-  gem 'launchy'
   gem 'capybara'
-  gem 'pry'
   gem 'capybara-webkit'
+  gem 'database_cleaner'
+  gem 'factory_bot_rails'
+  gem 'launchy'
+  gem 'letter_opener'
+  gem 'pry'
   gem 'rails-controller-testing'
+  gem 'rspec-rails'
 end
 
 group :test do
@@ -56,7 +64,7 @@ group :test do
 end
 
 group :development do
-  gem 'spring'
   gem 'puma'
   gem 'rubocop-rails', require: false
+  gem 'spring'
 end
