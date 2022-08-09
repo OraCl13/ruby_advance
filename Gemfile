@@ -47,6 +47,8 @@ gem 'omniauth-facebook'
 
 gem "omniauth-rails_csrf_protection"
 
+gem 'responders'
+
 group :test, :development do
   gem 'capybara'
   gem 'capybara-webkit'

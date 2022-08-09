@@ -1,11 +1,12 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy update cancel_choice position_edit]
   after_action :publish_answer, only: [:create]
+  before_action :load_answer, only: %i[update destroy]
+  before_action :load_question, only: %i[create destroy position_edit cancel_choice]
+  before_action :load_answer_by_answer_id, only: %i[position_edit cancel_choice]
 
   def create
-    @question = Question.find(params[:question_id])
     @answer = @question.answers.build(answer_params.merge(user_id: current_user.id))
-
     respond_to do |format|
       if @answer.save
         format.html { render partial: 'questions/answers', layout: false }
@@ -18,21 +19,15 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer = Answer.find(params[:id])
     @answer.update(answer_params)
     @question = @answer.reply_to
   end
 
   def destroy
-    @question = Question.find(params[:question_id])
-    @answer = Answer.find(params[:id])
     @answer.destroy
   end
 
   def position_edit
-    @question = Question.find(params[:question_id])
-    @answer = Answer.find(params[:answer_id])
-
     @question.answers.each do |answer|
       next unless (answer.pos_answers_users + answer.neg_answers_users).include? current_user.id
 
@@ -44,35 +39,26 @@ class AnswersController < ApplicationController
     end
     @answer.pos_answers_users += [current_user.id] if params[:choice] == 'Like'
     @answer.neg_answers_users += [current_user.id] if params[:choice] == 'Dislike'
-
     @answer.save
   end
 
   def cancel_choice
-    @question = Question.find(params[:question_id])
-    @answer = Answer.find(params[:answer_id])
     contains_user = false
-
     return unless params[:cancel]
 
     @question.answers.each do |answer|
-      if answer.pos_answers_users.include? current_user.id
-        answer.pos_answers_users -= [current_user.id]
-        answer.save
-        contains_user = true
-        break
-      elsif answer.neg_answers_users.include? current_user.id
-        answer.neg_answers_users -= [current_user.id]
+      if answer.pos_answers_users.include?(current_user.id) || answer.neg_answers_users.include?(current_user.id)
+        answer.pos_answers_users -= [current_user.id] if answer.pos_answers_users.include? current_user.id
+        answer.neg_answers_users -= [current_user.id] if answer.neg_answers_users.include? current_user.id
         answer.save
         contains_user = true
         break
       end
+      next if contains_user
 
-      unless contains_user
-        respond_to do |format|
-          format.html { render text: 'You dont make choice', status: :not_acceptable }
-          format.json { render text: ['You dont make choice(json)'], status: :not_acceptable }
-        end
+      respond_to do |format|
+        format.html { render partial: 'questions/answers', locals: {question: @question, user: current_user}, status: :not_acceptable }
+        format.json { render text: ['You dont make choice'], status: :not_acceptable }
       end
     end
   end
@@ -87,7 +73,24 @@ class AnswersController < ApplicationController
                                    partial: 'questions/answer',
                                    locals: { user: current_user,
                                              answer: @answer,
-                                             question: @answer.reply_to }) # Answer.order("created_at").last
+                                             question: @answer.reply_to }
+                                 )
+  end
+
+  def load_answer
+    @answer = Answer.find(params[:id])
+  end
+
+  def load_question
+    @question = Question.find(params[:question_id])
+  end
+
+  def load_answer_by_answer_id
+    @answer = Answer.find(params[:answer_id])
+  end
+
+  def interpolation_options
+    { resource_name: 'New awesome answer', time: @answer.created_at, user: current_user.email }
   end
 
   def answer_params

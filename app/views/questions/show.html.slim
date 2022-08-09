@@ -15,32 +15,32 @@
         hr
         h4 Question Comments
         .question_comments
-          - if !@question.comments[0].body.nil?
-            - @question.comments[0..-2].each do |comment|
+          - if !@question.comments.nil?
+            - @question.comments.each do |comment|
               = render 'questions/comments', comment: comment, question: @question, user: current_user
           - else
             p There are no comments, be first who write smth
-        = form_for [@question, @question_comment], remote: true, data: { type: :json }, html: { id: @question_comment.id } do |f|
+        = form_for [@question, @question.comments.build], remote: true, data: { type: :json } do |f| #  html:{ id: @question_comment.id }
           = f.hidden_field :is_question?, value: true
           = f.label :body, "."
           = f.text_area :body
           = f.submit 'Create'
       .answers
-        h2 Answers
         = render 'answers', question: @question, user: current_user
 
 .col-sm-6 style="max-width: 100%"
-  strong Give answer
   .card
     .card-body
-      = form_for [@question, @answer], remote: true, html: {id: @answer.id}, data: { type: :json } do |f|
-        = f.label :body, 'Your answer'
-        .answer-errors
-        = f.text_area :body
-        p Add Attachments:
-        p
-          = f.fields_for :attachments, @answer do |a|
-            = render 'attachment_fields', f: a
-        p
-          = link_to_add_association "add file", f, :attachments
-        = f.submit 'Create', class: 'button_create'
+      -if current_user
+        strong Give answer
+        = form_for [@question, @answer], remote: true, html: {id: @answer.id}, data: { type: :json } do |f|
+          = f.label :body, 'Your answer'
+          .answer-errors
+          = f.text_area :body
+          p Add Attachments:
+          p
+            = f.fields_for :attachments, @answer.attachments.build do |a|
+              = render 'attachment_fields', f: a
+          p
+            = link_to_add_association "add file", f, :attachments
+          = f.submit 'Create', class: 'button_create'

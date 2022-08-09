@@ -1,54 +1,49 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy]
   before_action :load_question, only: %i[show edit update destroy]
+  before_action :build_answer, only: %i[show]
   after_action :publish_question, only: [:create]
   protect_from_forgery except: :update
 
   def index
-    @questions = Question.all
+    respond_with(@questions = Question.all)
   end
 
   def show
-    @answer = @question.answers.build
-    @question_comment = @question.comments.build if @question
-    @answer_comment = @answer.comments.build if @answer
-    @answer.attachments.build
+    respond_with @question
   end
 
   def new
-    @question = Question.new
-    @question.attachments.build
+    respond_with(@question = Question.new)
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
-    @question = Question.new(question_params)
-    @question.user_id = current_user.id
-    if @question.save
-      flash[:notice] = 'Your question successfully created.'
-      redirect_to questions_path
-    else
-      flash[:notice] = 'Your question wasnt created'
-      render :new
-    end
+    respond_with(@question = Question.create(question_params.merge(user_id: current_user.id)))
   end
 
   def update
-    @question = Question.find(params[:id])
     @question.update(question_params)
+    respond_with @question
   end
 
   def destroy
-    @question = Question.find(params[:id])
-    @question.destroy
+    respond_with @question.destroy
   end
 
   private
 
   def load_question
     @question = Question.find(params[:id])
+  end
+
+  def build_answer
+    @answer = @question.answers.build
+  end
+
+  def interpolation_options
+    { resource_name: 'New awesome question', time: @question.created_at, user: current_user.email }
   end
 
   def publish_question

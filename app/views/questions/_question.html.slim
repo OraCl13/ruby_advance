@@ -22,11 +22,11 @@
             = f.submit 'Save'
         p = button_to 'Destroy question', question_path(question), method: :delete, remote: true
 
-      hr
-      h4 Question Comments
-      .comments
-        - if !question.comments[0].nil?
-          - question.comments.each do |comment|
-            = render 'questions/comments', comment: comment, question: question, user: user
-        - else
-          p There are no comments, be first who write smth
+    hr
+    h4 Question Comments
+    .comments
+      - if !question.comments[0].nil?
+        - question.comments.each do |comment|
+          = render 'questions/comments', comment: comment, question: question, user: user
+      - else
+        p There are no comments, be first who write smth

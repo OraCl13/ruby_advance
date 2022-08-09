@@ -7,10 +7,10 @@ $ ->
     $('form#edit-answer-' + answer_id).show();
 
   $('form.cancel').bind 'ajax:error', (e, xhr, status, error) ->
-    $('.position-answers-errors').append(xhr.responseText)
+    alert(xhr.responseText);
 
   $('form.change_pos').bind 'ajax:error', (e, xhr, status, error) ->
-    $('.position-answers-errors').append(xhr.responseText)
+    alert(xhr.responseText);
 
   $('form.new_answer').bind 'ajax:error', (e, xhr, status, error) ->
     $('.answer-errors').append(xhr['responseJSON'][0])
