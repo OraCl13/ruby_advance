@@ -17,6 +17,7 @@
 
 # config
 config/database.yml
+config/secrets.yml
 
 # idea
 .idea
