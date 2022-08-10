@@ -1,2 +1,6 @@
 $('.answers').html('<%= j render 'questions/answers', answer: @answer,
                       question: @answer.reply_to, user: current_user, answer_comment: @answer.comments.build  %>');
+//$('form.change_pos').bind('ajax:error', function (e, xhr, status, error){
+//    console.log(1123)
+//    alert(xhr.responseText)
+//})

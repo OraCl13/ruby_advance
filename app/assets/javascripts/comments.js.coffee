@@ -8,6 +8,7 @@ $ ->
 
     received: (data) ->
       questionCommentsList.append data
+      $(".question_comments").load(location.href + " .question_comments");
   });
 
   App.cable.subscriptions.create('AnswerCommentsChannel', {
@@ -16,6 +17,8 @@ $ ->
     ,
 
     received: (data) ->
-      answerCommentsList = $(".answer_comments_#{$.parseHTML(data)[0]['id']}")
+      class_name = ".answer_comments_#{$.parseHTML(data)[0]['id']}"
+      answerCommentsList = $(class_name)
       answerCommentsList.append data
+      $(class_name).load(location.href + ' ' + class_name);
   });

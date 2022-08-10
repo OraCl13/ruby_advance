@@ -43,23 +43,17 @@ class AnswersController < ApplicationController
   end
 
   def cancel_choice
-    contains_user = false
     return unless params[:cancel]
 
     @question.answers.each do |answer|
-      if answer.pos_answers_users.include?(current_user.id) || answer.neg_answers_users.include?(current_user.id)
-        answer.pos_answers_users -= [current_user.id] if answer.pos_answers_users.include? current_user.id
-        answer.neg_answers_users -= [current_user.id] if answer.neg_answers_users.include? current_user.id
-        answer.save
-        contains_user = true
-        break
-      end
-      next if contains_user
+      next unless answer.pos_answers_users.include?(current_user.id) || answer.neg_answers_users.include?(current_user.id)
 
-      respond_to do |format|
-        format.html { render partial: 'questions/answers', locals: {question: @question, user: current_user}, status: :not_acceptable }
-        format.json { render text: ['You dont make choice'], status: :not_acceptable }
-      end
+      answer.pos_answers_users -= [current_user.id] if answer.pos_answers_users.include? current_user.id
+      answer.neg_answers_users -= [current_user.id] if answer.neg_answers_users.include? current_user.id
+      answer.save
+    end
+    respond_to do |format|
+      format.js
     end
   end
 

@@ -9,9 +9,7 @@ class QuestionsController < ApplicationController
     respond_with(@questions = Question.all)
   end
 
-  def show
-    respond_with @question
-  end
+  def show; end
 
   def new
     respond_with(@question = Question.new)

@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy]
   before_action :find_question, only: %i[create publish_comment]
   before_action :find_answer, only: %i[create]
+  before_action :load_comment, only: %i[destroy]
   after_action :publish_comment, only: [:create]
 
   def create
@@ -23,8 +24,6 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment = Comment.find(params[:id]) if params[:answer_comment_destroy]
-    @comment = Comment.find(params[:id]) if params[:question_comment_destroy]
     @comment.destroy
 
     respond_to do |format|
@@ -43,6 +42,11 @@ class CommentsController < ApplicationController
     @answer = Answer.find(params[:answer_id]) if params[:answer_id]
   end
 
+  def load_comment
+    @comment = Comment.find(params[:id]) if params[:answer_comment_destroy]
+    @comment = Comment.find(params[:id]) if params[:question_comment_destroy]
+  end
+
   def publish_comment
     return if @comment.errors.any?
 
@@ -54,7 +58,7 @@ class CommentsController < ApplicationController
                                                answer: @comment.article_id,
                                                comment: @comment,
                                                user: current_user }
-)
+                                   )
     else
       ActionCable.server.broadcast 'answer_comments',
                                    ApplicationController.render(
@@ -63,7 +67,7 @@ class CommentsController < ApplicationController
                                                answer: @comment.article_id,
                                                comment: @comment,
                                                user: current_user }
-)
+                                   )
     end
   end
 
