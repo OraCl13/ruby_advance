@@ -1,6 +1,7 @@
 hr
+h2 Answers
 - question.answers.each do |answer|
-  div class= "answer_#{answer.id}"
+  div class= "answer_#{answer.id} answer_point" data-answer-id=answer.id
     - if answer.persisted?
       strong style="display: inline-block;" Rate:
       p style="display: inline-block;" class="pos_answer_count" = "#{answer.pos_answers_users.length}"
@@ -41,7 +42,7 @@ hr
               = render 'questions/comments', comment: comment, answer: answer, question: question, user: user
           - else
             p There are no comments, be first who write smth
-      = form_for [question, answer, defined?(@answer_comment).nil? ? answer_comment : @answer_comment],
+      = form_for [question, answer, answer.comments.build],
               remote: true, data: { type: :json },
             html: { class: "new_answer_comment" } do |f|
         = f.hidden_field :is_question?, value: false
