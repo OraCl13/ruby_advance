@@ -54,6 +54,7 @@ gem 'responders'
 group :test, :development do
   gem 'capybara'
   gem 'capybara-webkit'
+  gem 'capybara-email'
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'launchy'
