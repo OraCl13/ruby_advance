@@ -52,6 +52,9 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    capybara-email (3.0.2)
+      capybara (>= 2.4, < 4.0)
+      mail
     capybara-webkit (1.15.1)
       capybara (>= 2.3, < 4.0)
       json
@@ -169,15 +172,18 @@ GEM
       rack-protection
     omniauth-facebook (9.0.0)
       omniauth-oauth2 (~> 1.2)
-    omniauth-oauth2 (1.8.0)
-      oauth2 (>= 1.4, < 3)
+    omniauth-github (2.0.0)
       omniauth (~> 2.0)
+      omniauth-oauth2 (~> 1.7.1)
+    omniauth-oauth2 (1.7.3)
+      oauth2 (>= 1.4, < 3)
+      omniauth (>= 1.9, < 3)
     omniauth-rails_csrf_protection (1.0.1)
       actionpack (>= 4.2)
       omniauth (~> 2.0)
     orm_adapter (0.5.0)
     parallel (1.22.1)
-    parser (3.1.2.0)
+    parser (3.1.2.1)
       ast (~> 2.4.1)
     pg (0.21.0)
     pry (0.14.1)
@@ -298,7 +304,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    ssrf_filter (1.0.7)
+    ssrf_filter (1.0.8)
     temple (0.8.2)
     thor (1.2.1)
     thread_safe (0.3.6)
@@ -329,6 +335,7 @@ PLATFORMS
 
 DEPENDENCIES
   capybara
+  capybara-email
   capybara-webkit
   carrierwave
   cocoon
@@ -342,6 +349,7 @@ DEPENDENCIES
   letter_opener
   omniauth
   omniauth-facebook
+  omniauth-github
   omniauth-rails_csrf_protection
   pg (~> 0.18)
   pry

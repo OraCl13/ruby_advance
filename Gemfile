@@ -45,6 +45,8 @@ gem 'omniauth'
 
 gem 'omniauth-facebook'
 
+gem 'omniauth-github'
+
 gem "omniauth-rails_csrf_protection"
 
 gem 'responders'
@@ -52,6 +54,7 @@ gem 'responders'
 group :test, :development do
   gem 'capybara'
   gem 'capybara-webkit'
+  gem 'capybara-email'
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'launchy'
