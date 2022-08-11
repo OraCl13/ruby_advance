@@ -4,6 +4,7 @@ class CommentsController < ApplicationController
   before_action :find_answer, only: %i[create]
   before_action :load_comment, only: %i[destroy]
   after_action :publish_comment, only: [:create]
+  authorize_resource
 
   def create
     @comment = if comment_params[:is_question] == 'true'

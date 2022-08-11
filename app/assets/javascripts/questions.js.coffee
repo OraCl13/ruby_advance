@@ -14,5 +14,3 @@ $ ->
     received: (data) ->
       questionsList.append data
   });
-$(document).ready(ready)
-$(document).page('page:load', ready)

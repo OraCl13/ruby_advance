@@ -4,6 +4,7 @@ class QuestionsController < ApplicationController
   before_action :build_answer, only: %i[show]
   after_action :publish_question, only: [:create]
   protect_from_forgery except: :update
+  authorize_resource
 
   def index
     respond_with(@questions = Question.all)

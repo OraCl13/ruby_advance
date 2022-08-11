@@ -82,7 +82,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '.find_for_ouath for facebook' do
+  describe '.find_for_ouath for github' do
     let!(:user) { create(:user) }
     let(:auth) { OmniAuth::AuthHash.new(provider: 'github', uid: '123456') }
 
