@@ -53,6 +53,8 @@ gem 'responders'
 
 gem 'cancancan'
 
+gem 'doorkeeper'
+
 group :test, :development do
   gem 'capybara'
   gem 'capybara-webkit'
@@ -68,6 +70,7 @@ end
 
 group :test do
   gem 'shoulda-matchers'
+  gem 'json_spec'
 end
 
 group :development do

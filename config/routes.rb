@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  use_doorkeeper
   default_url_options host: 'localhost'
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks',
                                     confirmations: 'confirmations' }
@@ -12,6 +13,16 @@ Rails.application.routes.draw do
     end
     resources :comments
   end
+
+  namespace :api do
+    namespace :v1 do
+      resource :profiles do
+        get :me, on: :collection
+        get :users, on: :collection
+      end
+    end
+  end
+
   root to: 'questions#index'
   mount ActionCable.server => '/cable'
 end
