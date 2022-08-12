@@ -51,6 +51,8 @@ gem "omniauth-rails_csrf_protection"
 
 gem 'responders'
 
+gem 'cancancan'
+
 group :test, :development do
   gem 'capybara'
   gem 'capybara-webkit'

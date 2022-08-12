@@ -4,6 +4,7 @@ class AnswersController < ApplicationController
   before_action :load_answer, only: %i[update destroy]
   before_action :load_question, only: %i[create destroy position_edit cancel_choice]
   before_action :load_answer_by_answer_id, only: %i[position_edit cancel_choice]
+  authorize_resource
 
   def create
     @answer = @question.answers.build(answer_params.merge(user_id: current_user.id))

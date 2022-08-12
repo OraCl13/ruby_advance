@@ -20,6 +20,3 @@ $ ->
       answersList.append data
       $(".answers").load(location.href + " .answers");
   });
-
-$(document).ready(ready)
-$(document).page('page:load', ready)
