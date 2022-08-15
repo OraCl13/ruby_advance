@@ -13,6 +13,6 @@ class Question < ApplicationRecord
 
   def calculate_reputation
     reputation = Reputation.calculate(self)
-    User.find(self.user_id).update(reputation: reputation)
+    User.find(self.user_id).update(reputation: reputation) if self.user_id
   end
 end

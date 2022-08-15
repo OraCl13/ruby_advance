@@ -4,7 +4,6 @@ require 'rails_helper'
 
 describe 'Questions API' do
   describe 'GET /index' do
-    # let(:api_path) { get '/api/v1/questions', access_token: '1234', format: :json }
     it_behaves_like 'API Authenticable'
 
     context 'authorized' do
@@ -46,6 +45,39 @@ describe 'Questions API' do
       end
     end
   end
+
+  describe 'POST /create' do
+    it_behaves_like 'API Authenticable'
+
+    context 'authorized' do
+      let(:access_token) { create(:access_token) }
+      let!(:question) { create(:question) }
+
+      before { post "/api/v1/questions", params: { format: :json, access_token: access_token.token,
+                                                                           body: '123qwe', title: '123',
+                                                                           question: attributes_for(:question) } }
+
+      it 'returns 201 status code' do
+        expect(response).to be_created
+      end
+
+      it 'only 1 object' do
+        expect(response.body).to_not be_an_instance_of(Array)
+      end
+
+      it 'answer object contains valid body' do
+        expect(response.body['body']).to eq 'body'
+        expect(response.body['title']).to eq 'title'
+      end
+
+      it 'gives wrong body/title' do
+        post "/api/v1/questions/#{question.id}/answers/", params: { format: :json, access_token: access_token.token,
+                                                                    body: '123qwe', answer: attributes_for(:invalid_answer) }
+        expect(response).to_not be_success
+      end
+    end
+  end
+
   def do_request(options = {})
     get '/api/v1/questions', params: { format: :json }.merge(options)
   end
