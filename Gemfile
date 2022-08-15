@@ -55,6 +55,12 @@ gem 'cancancan'
 
 gem 'doorkeeper'
 
+gem 'active_model_serializers'
+
+gem 'oj'
+
+gem 'oj_mimic_json'
+
 group :test, :development do
   gem 'capybara'
   gem 'capybara-webkit'

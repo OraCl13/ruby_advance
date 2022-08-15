@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 describe 'Profile API' do
@@ -67,7 +69,7 @@ describe 'Profile API' do
         expect(parsed_response['id']).to eq User.where.not(id: me.id).first.id
       end
 
-      it "dont contains #{attr}" do
+      it 'dont contains me' do
         expect(JSON.parse(response.body)).to_not include me
       end
     end
