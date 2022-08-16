@@ -56,7 +56,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it 'renders edit view', js: true do
-      expect(response).to have_http_status 204
+      expect(response).to redirect_to root_path
     end
   end
 
