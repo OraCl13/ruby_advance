@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Question, type: :model do
+  it_behaves_like 'Attachments'
   subject { build(:question) }
 
   # Presence
@@ -9,9 +10,6 @@ RSpec.describe Question, type: :model do
 
   # Table connections
   it { should have_many(:answers) }
-  it { should have_many(:attachments) }
-
-  it { should accept_nested_attributes_for :attachments }
 
   its(:title) { should == 'MyString' }
 

@@ -75,8 +75,9 @@ describe 'Answer API' do
       let!(:question) { create(:question) }
       let(:answer) { create(:answer) }
 
-      before { post "/api/v1/questions/#{question.id}/answers/", params: { format: :json, access_token: access_token.token,
-                                                                           body: '123qwe', answer: attributes_for(:answer) } }
+      before { 
+        post "/api/v1/questions/#{question.id}/answers/", params: { format: :json, access_token: access_token.token,
+                                                                    body: '123qwe', answer: attributes_for(:answer) } }
 
       it 'returns 201 status code' do
         expect(response).to be_created
