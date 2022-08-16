@@ -63,8 +63,8 @@ gem 'oj_mimic_json'
 
 group :test, :development do
   gem 'capybara'
-  gem 'capybara-webkit'
   gem 'capybara-email'
+  gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'factory_bot_rails'
   gem 'launchy'
@@ -75,8 +75,9 @@ group :test, :development do
 end
 
 group :test do
-  gem 'shoulda-matchers'
   gem 'json_spec'
+  gem 'rspec-its'
+  gem 'shoulda-matchers'
 end
 
 group :development do
