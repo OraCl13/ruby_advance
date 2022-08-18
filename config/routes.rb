@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  mount Sidekiq::Web => '/sidekiq'
   use_doorkeeper
   default_url_options host: 'localhost'
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks',

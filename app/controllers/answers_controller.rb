@@ -12,7 +12,8 @@ class AnswersController < ApplicationController
     respond_to do |format|
       if @answer.save
         format.html { render partial: 'questions/answers', layout: false }
-        format.json { render json: [@answer, @answer.attachments] }
+        # format.json { render json: [@answer, @answer.attachments] }
+        format.json { render json: @answer.attachments.nil? ? [@answer, @answer.attachments] : [@answer] }
       else
         format.html { render plain: @answer.errors.full_messages.join("\n"), status: :unprocessable_entity }
         format.json { render plain: @answer.errors.full_messages, status: :unprocessable_entity }
@@ -21,6 +22,7 @@ class AnswersController < ApplicationController
   end
 
   def update
+    puts 'x'*500
     @answer.update(answer_params)
     @question = @answer.reply_to
   end
