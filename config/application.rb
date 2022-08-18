@@ -10,6 +10,9 @@ module Qna2
   class Application < Rails::Application
     # Use the responders controller from the responders gem
     config.app_generators.scaffold_controller :responders_controller
+
+    config.active_job.queue_adapter = :sidekiq
+
     # config.active_record.include_root_in_json = true
     config.generators do |g|
       g.test_framework :rspec,

@@ -25,6 +25,10 @@ gem 'jbuilder'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc',  group: :doc
 
+gem 'therubyracer'
+
+gem 'execjs'
+
 gem 'slim-rails'
 
 gem 'devise'
@@ -47,7 +51,7 @@ gem 'omniauth-facebook'
 
 gem 'omniauth-github'
 
-gem "omniauth-rails_csrf_protection"
+gem 'omniauth-rails_csrf_protection'
 
 gem 'responders'
 
@@ -61,11 +65,18 @@ gem 'oj'
 
 gem 'oj_mimic_json'
 
+gem 'whenever'
+
+gem 'sidekiq', '~> 3.2.1'
+gem 'sidetiq'
+gem 'sinatra', '>= 1.3.0', require: nil
+
 group :test, :development do
   gem 'capybara'
   gem 'capybara-email'
   gem 'capybara-webkit'
   gem 'database_cleaner'
+  gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'launchy'
   gem 'letter_opener'
@@ -82,6 +93,7 @@ end
 
 group :development do
   gem 'puma'
+  gem 'rb-readline'
   gem 'rubocop-rails', require: false
   gem 'spring'
 end
