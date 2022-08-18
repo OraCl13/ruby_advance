@@ -65,7 +65,6 @@ gem 'oj'
 
 gem 'oj_mimic_json'
 
-
 gem 'whenever'
 
 gem 'sidekiq', '~> 3.2.1'

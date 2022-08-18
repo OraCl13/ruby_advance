@@ -29,3 +29,6 @@ public/public/packs
 yarn-debug.log*
 .yarn-integrity
 public/uploads/attachment
+
+# dump
+*.rdb
