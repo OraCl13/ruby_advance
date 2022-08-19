@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       post :position_edit, :cancel_choice
     end
     resources :comments
+    post :subscribe, :cancel_subscrition
   end
 
   namespace :api do

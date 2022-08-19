@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, only: %i[new create edit update destroy]
   before_action :load_question, only: %i[show edit update destroy]
+  before_action :load_question_by_question_id, only: %i[subscribe cancel_subscrition]
   before_action :build_answer, only: %i[show]
   after_action :publish_question, only: [:create]
   protect_from_forgery except: :update
@@ -20,7 +21,7 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def create
-    respond_with(@question = Question.create(question_params.merge(user_id: current_user.id)))
+    respond_with(@question = Question.create(question_params.merge(user_id: current_user.id, subscribers: [current_user.id])))
   end
 
   def update
@@ -32,10 +33,36 @@ class QuestionsController < ApplicationController
     respond_with @question.destroy
   end
 
+  def subscribe
+    return unless current_user
+
+    if @question.subscribers.include? current_user.id
+      puts 'already subscribed'
+    else
+      @question.subscribers += [current_user.id]
+      @question.save
+    end
+  end
+
+  def cancel_subscrition
+    return unless current_user
+
+    if @question.subscribers.include? current_user.id
+      @question.subscribers -= [current_user.id]
+      @question.save
+    else
+      puts 'you are note sub-'
+    end
+  end
+
   private
 
   def load_question
     @question = Question.find(params[:id])
+  end
+
+  def load_question_by_question_id
+    @question = Question.find(params[:question_id])
   end
 
   def build_answer

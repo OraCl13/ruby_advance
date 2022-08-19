@@ -1,5 +1,13 @@
 .card
   .card-body
+    - if user
+      - unless question.subscribers.include? user.id
+        p = button_to 'Subscribe', question_subscribe_path(question),
+            method: :post, remote: true
+      - else
+        h6 Subscribed
+        p = button_to 'Cancel sub', question_cancel_subscrition_path(question),
+            method: :post, remote: true, params: { question_id: question.id }
     h2 Question
     strong Title:
     p = question.title
