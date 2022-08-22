@@ -1,0 +1,26 @@
+table
+  tr
+    th Result
+    th Body
+    th Created at
+    th Link to
+  -@general.each do |element|
+    tr
+    - case
+      - when element.class.name == 'Question'
+        td Question
+        td = element.title + ": " +element.body
+        td = element.created_at
+        td = link_to 'Link to', question_path(element.id)
+      - when element.class.name == 'Answer'
+        td Answer
+        td = element.body
+        td = element.created_at
+        td = link_to 'Link to', question_path(element.reply_to)
+      - when element.class.name == 'Comment'
+        td = "Comment for #{element.article_type == 'Answer' ? 'answer' : 'question'}"
+        td = element.body
+        td = element.created_at
+        td = link_to 'Link to', question_path(element.reply_to)
+      - else
+        p Error
