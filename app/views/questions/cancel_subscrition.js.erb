@@ -1,0 +1,8 @@
+<% if @question.errors.present? %>
+<% @question.errors.full_messages.each do |message| %>
+$('.questions-errors').html('<%= j message %>')
+<% end %>
+<% else %>
+console.log("SUBSCRIBE")
+$('.questions').html('<%= j render 'questions/questions', questions: Question.all %>');
+<% end %>

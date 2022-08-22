@@ -9,11 +9,17 @@ class Answer < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
-  after_create :calculate_rating
+  after_create :update_reputation
+  after_create :send_message_new_answer
+  after_update :send_message_new_answer
 
   private
 
-  def calculate_rating
-    Reputation.delay.calculate(self)
+  def update_reputation
+    CalculateReputationJob.perform_later(self)
+  end
+
+  def send_message_new_answer
+    MessageForAnswerJob.perform_now(id, nil)
   end
 end
