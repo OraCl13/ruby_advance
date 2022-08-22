@@ -67,6 +67,10 @@ gem 'oj_mimic_json'
 
 gem 'whenever'
 
+gem 'mysql2'
+
+gem 'thinking-sphinx'
+
 gem 'sidekiq', '~> 3.2.1'
 gem 'sidetiq'
 gem 'sinatra', '>= 1.3.0', require: nil

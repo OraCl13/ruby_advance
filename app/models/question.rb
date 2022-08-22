@@ -5,6 +5,8 @@ class Question < ApplicationRecord
   has_many :attachments, dependent: :destroy, as: :attachmentable
   has_many :comments, dependent: :destroy, as: :article
 
+  belongs_to :user
+
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
   after_create :update_reputation

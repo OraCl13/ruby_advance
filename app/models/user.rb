@@ -4,6 +4,8 @@ class User < ApplicationRecord
          :confirmable, :omniauthable, omniauth_providers: %i[facebook github]
 
   has_many :authorizations, dependent: :destroy
+  has_many :questions, dependent: :destroy
+  has_many :answers, dependent: :destroy
 
   has_many :access_grants,
            class_name: 'Doorkeeper::AccessGrant',
