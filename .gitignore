@@ -10,14 +10,17 @@
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
+db/sphinx
 
 # Ignore all logfiles and tempfiles.
 /log/*.log
+/log/*.pid
 /tmp
 
 # config
 config/database.yml
 config/secrets.yml
+config/*.sphinx.conf
 
 # idea
 .idea

@@ -2,6 +2,7 @@ class Comment < ApplicationRecord
   validates :body, presence: true
 
   belongs_to :article, polymorphic: true
+  belongs_to :user
 
   after_create :send_message_new_comment
 
