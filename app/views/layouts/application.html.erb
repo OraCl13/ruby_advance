@@ -29,6 +29,13 @@
       </li>
     </ul>
     <%= form_for :user, url: result_search_path, method: :post , html: { class: 'form-inline my-2 my-lg-0' } do |f|%>
+      <strong>Include:  </strong>
+      <%= f.label "Questions" %> <br />
+      <%= f.check_box :Question %> <br />
+      <%= f.label "Answers" %> <br />
+      <%= f.check_box :Answer %> <br />
+      <%= f.label "Comments" %> <br />
+      <%= f.check_box :Comment %> <br />
       <%= f.text_field :request, class: 'form-control mr-sm-2', label: false %>
       <%= f.submit 'Search', class: 'btn btn-outline-success my-2 my-sm-0' %>
     <%end%>

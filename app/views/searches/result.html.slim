@@ -21,6 +21,5 @@ table
         td = "Comment for #{element.article_type == 'Answer' ? 'answer' : 'question'}"
         td = element.body
         td = element.created_at
-        td = link_to 'Link to', question_path(element.reply_to)
-      - else
-        p Error
+        td = link_to 'Link to',
+                question_path(element.article_type == 'Question' ? element.article_id : Answer.find(element.article_id).reply_to)

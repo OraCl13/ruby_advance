@@ -14,6 +14,9 @@
  *= require_self
  */
 
-td{
+td {
     min-width: 100px;
+}
+input[type=checkbox] {
+    margin: 0 5px 0 5px;
 }
