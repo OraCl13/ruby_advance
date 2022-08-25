@@ -1,6 +1,8 @@
 class SearchesController < ApplicationController
   def result
     @general = []
+    return @general = ThinkingSphinx.search unless additional_params
+
     return @general = ThinkingSphinx.search(search_params) unless additional_params.values.include? '1'
 
     additional_params.each do |key, value|
@@ -18,6 +20,6 @@ class SearchesController < ApplicationController
   end
 
   def additional_params
-    params[:user].except :request
+    params[:user]&.except(:request)
   end
 end

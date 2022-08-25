@@ -11,7 +11,9 @@ Rails.application.routes.draw do
 
   resource :search do
     post :result
+    get :result
   end
+
   resources :questions do
     resources :answers do
       resources :comments
