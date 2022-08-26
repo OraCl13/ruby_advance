@@ -9,6 +9,11 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'omniauth_callbacks',
                                     confirmations: 'confirmations' }
 
+  resource :search do
+    post :result
+    get :result
+  end
+
   resources :questions do
     resources :answers do
       resources :comments

@@ -1,5 +1,4 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  check_authorization
   def facebook
     @user = User.find_for_oauth(request.env['omniauth.auth'])
     return redirect_to questions_path, alert: 'Error. Check if your provider account contains email' unless @user
