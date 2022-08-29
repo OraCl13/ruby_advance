@@ -17,10 +17,10 @@ every 1.day do
   runner 'DailyDigestJob.perform_now'
 end
 
-every 1.minutes do
+every hour do
   rake 'ts:index'
+  sleep 1
   rake 'ts:start'
-  puts 'Y'*600
 end
 
 # Learn more: http://github.com/javan/whenever
