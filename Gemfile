@@ -75,6 +75,8 @@ gem 'dotenv'
 
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 
+gem 'redis', '~> 4.0'
+
 gem 'sidekiq', '~> 3.2.1'
 gem 'sidetiq'
 gem 'sinatra', '>= 1.3.0', require: nil
