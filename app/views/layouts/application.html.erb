@@ -28,7 +28,7 @@
         <% end %>
       </li>
     </ul>
-    <% unless current_page?(new_user_session_path) %>
+    <% unless request.path.include? 'users/' %>
       <%= form_for :user, url: result_search_path, method: :post, html: { class: 'form-inline my-2 my-lg-0' } do |f| %>
         <strong>Include: </strong>
         <%= f.label "Questions" %> <br/>
