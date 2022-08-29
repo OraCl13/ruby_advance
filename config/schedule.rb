@@ -5,7 +5,7 @@
 
 # Example:
 #
-# set :output, "/path/to/my/cron_log.log"
+set :output, 'log/cron.log'
 #
 # every 2.hours do
 #   command "/usr/bin/some_great_command"
@@ -17,8 +17,9 @@ every 1.day do
   runner 'DailyDigestJob.perform_now'
 end
 
-every 1.minute do
+every 1.minutes do
   rake 'ts:index'
+  rake 'deploy:run_scedule'
 end
 
 # Learn more: http://github.com/javan/whenever
