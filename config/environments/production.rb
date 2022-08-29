@@ -72,7 +72,6 @@ Rails.application.configure do
   config.action_cable.allowed_request_origins = %w[http://161.35.212.31 https://161.35.212.31]
   config.action_cable.url = 'http://161.35.212.31/cable'
   config.action_cable.disable_request_forgery_protection = true
-  ActionCable.logger.enabled = true
 
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
