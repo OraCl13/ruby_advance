@@ -19,6 +19,7 @@ end
 
 every 1.minutes do
   rake 'ts:index'
+  rake 'ts:start'
   puts 'Y'*600
 end
 
