@@ -19,7 +19,7 @@ end
 
 every 1.minutes do
   rake 'ts:index'
-  rake 'deploy:run_scedule'
+  puts 'Y'*600
 end
 
 # Learn more: http://github.com/javan/whenever
