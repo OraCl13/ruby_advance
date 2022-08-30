@@ -18,10 +18,7 @@ every 1.day do
 end
 
 every 1.minute do
-  puts 'x'*500
   rake 'ts:index'
-  # sleep 1
-  # rake 'ts:start'
 end
 
 # Learn more: http://github.com/javan/whenever
