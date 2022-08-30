@@ -75,7 +75,7 @@ gem 'dotenv'
 
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 
-gem 'redis'
+gem "redis", "~> 3.0"
 
 gem 'em-hiredis'
 
