@@ -82,8 +82,12 @@ gem 'em-hiredis'
 gem 'redis-rails'
 
 gem 'sidekiq', '~> 3.2.1'
+
 gem 'sidetiq'
+
 gem 'sinatra', '>= 1.3.0', require: nil
+
+gem 'unicorn'
 
 group :test, :development do
   gem 'capybara'
@@ -116,4 +120,5 @@ group :development do
   gem 'capistrano-rvm', require: false
   gem 'capistrano-ssh-doctor', git: 'https://github.com/capistrano-plugins/capistrano-ssh-doctor.git', require: false
   gem 'capistrano-sidekiq', require: false
+  gem 'capistrano3-unicorn', require: false
 end
