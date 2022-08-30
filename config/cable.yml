@@ -1,0 +1,6 @@
+production: &production
+  url: redis://161.35.212.31:6379
+  adapter: redis
+development: &development
+  url: redis://localhost:6379
+test: *development
