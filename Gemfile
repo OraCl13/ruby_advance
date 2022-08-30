@@ -76,6 +76,7 @@ gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
 
 gem 'redis'
+gem 'redis-rails'
 
 gem 'sidekiq', '~> 3.2.1'
 gem 'sidetiq'
