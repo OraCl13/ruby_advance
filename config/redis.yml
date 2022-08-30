@@ -1,0 +1,6 @@
+default:
+  host: localhost
+  port: 6379
+production:
+  host: 161.35.212.31
+  port: 6379
