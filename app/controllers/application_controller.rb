@@ -1,5 +1,4 @@
 require 'application_responder'
-require 'resolv-replace'
 
 class ApplicationController < ActionController::Base
   self.responder = ApplicationResponder
