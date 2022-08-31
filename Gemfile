@@ -110,15 +110,15 @@ group :test do
 end
 
 group :development do
+  gem 'capistrano', require: false
+  gem 'capistrano3-unicorn', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-sidekiq', require: false
+  gem 'capistrano-ssh-doctor', git: 'https://github.com/capistrano-plugins/capistrano-ssh-doctor.git', require: false
   gem 'puma'
   gem 'rb-readline'
   gem 'rubocop-rails', require: false
   gem 'spring'
-  gem 'capistrano', require: false
-  gem 'capistrano-bundler', require: false
-  gem 'capistrano-rails', require: false
-  gem 'capistrano-rvm', require: false
-  gem 'capistrano-ssh-doctor', git: 'https://github.com/capistrano-plugins/capistrano-ssh-doctor.git', require: false
-  gem 'capistrano-sidekiq', require: false
-  gem 'capistrano3-unicorn', require: false
 end
