@@ -74,6 +74,8 @@ Rails.application.configure do
   config.action_cable.disable_request_forgery_protection = true
   config.gem 'redis'
 
+  config.webpacker.check_yarn_integrity = false
+
   # Use a different logger for distributed setups.
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')

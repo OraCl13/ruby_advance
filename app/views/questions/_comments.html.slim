@@ -1,13 +1,15 @@
 -if defined? answer
   div class="comment_#{comment.id}" id=answer
-    p=comment.body
+    -cache comment
+      p=comment.body
     -if user
       =button_to 'Destroy comment', question_answer_comment_path(question, answer, comment),
           method: :delete, remote: true, name: "answer_comment_destroy" if user.id.equal? comment.user_id
     hr
 -else
   div class="comment_#{comment.id}"
-    p= comment.body
+    -cache comment
+      p=comment.body
     -if user
       = button_to 'Destroy comment', question_comment_path(question, comment),
           method: :delete, remote: true, name: "question_comment_destroy" if user.id.equal? comment.user_id

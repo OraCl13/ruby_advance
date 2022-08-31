@@ -1,3 +1,4 @@
-- for question in questions
-  .col-sm-6 style="max-width: 100%"
-    = render 'question', question: question, user: current_user
+-cache collection_cache_key_for :question do
+  - for question in questions
+    .col-sm-6 style="max-width: 100%"
+      = render 'question', question: question, user: current_user
