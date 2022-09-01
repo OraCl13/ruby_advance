@@ -5,5 +5,5 @@ every 1.day do
 end
 
 every 1.minute do
-  rake 'ts:index'
+  rake 'ts:rebuild'
 end

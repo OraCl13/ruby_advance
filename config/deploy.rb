@@ -23,6 +23,7 @@ namespace :deploy do
       #execute :touch, release_path.join('tmp/restart.txt')
       invoke 'unicorn:restart'
     end
+    rake 'ts:index'
   end
 
   after :publishing, :restart
