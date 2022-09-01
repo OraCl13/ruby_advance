@@ -36,23 +36,19 @@ class QuestionsController < ApplicationController
   def subscribe
     return unless current_user
 
-    if @question.subscribers.include? current_user.id
-      puts 'already subscribed'
-    else
-      @question.subscribers += [current_user.id]
-      @question.save
-    end
+    return if @question.subscribers.include? current_user.id
+
+    @question.subscribers += [current_user.id]
+    @question.save
   end
 
   def cancel_subscrition
     return unless current_user
 
-    if @question.subscribers.include? current_user.id
-      @question.subscribers -= [current_user.id]
-      @question.save
-    else
-      puts 'you are note sub-'
-    end
+    return unless @question.subscribers.include? current_user.id
+
+    @question.subscribers -= [current_user.id]
+    @question.save
   end
 
   private

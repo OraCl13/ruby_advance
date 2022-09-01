@@ -21,7 +21,6 @@ class AnswersController < ApplicationController
   end
 
   def update
-    puts 'x'*500
     @answer.update(answer_params)
     @question = @answer.reply_to
   end

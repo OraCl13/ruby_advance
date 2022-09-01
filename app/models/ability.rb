@@ -29,5 +29,7 @@ class Ability
     can :create, [Question, Answer, Comment]
     can :update, [Question, Answer], user_id: user.id
     can :destroy, [Question, Answer, Comment], user_id: user.id
+    can :subscribe, [Question]
+    can :cancel_subscrition, [Question]
   end
 end
