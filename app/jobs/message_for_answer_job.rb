@@ -10,8 +10,9 @@ class MessageForAnswerJob < ApplicationJob
                else
                  Answer.find(args[0]).reply_to.id
                end
-    Question.find(question).subscribers.each do |subscriber_id|
-      NewMessageMailer.message(User.find(subscriber_id).email).deliver_later
+    subs = Question.find(question).subscribers
+    subs&.each do |subscriber_id|
+      NewMessageMailer.message(User.find(subscriber_id).email).deliver_later # (User.find(subscriber_id).email)
     end
   end
 end
