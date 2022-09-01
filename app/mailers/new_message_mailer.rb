@@ -1,6 +1,7 @@
 class NewMessageMailer < ApplicationMailer
-  def message(sub_mail)
-    @greeting = 'You have new answer for yours question'
-    mail to: sub_mail, subject: 'Welcome to My Awesome Site'
+  def digest_question(user, question)
+    @question = question
+    @greeting = 'Hi there! :D'
+    mail to: user.email
   end
 end

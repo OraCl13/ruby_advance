@@ -11,7 +11,7 @@ class Answer < ApplicationRecord
 
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
-  after_commit :send_message_new_answer, on: :create
+  after_create :send_message_new_answer
   after_update :send_message_new_answer
 
   private

@@ -11,8 +11,9 @@ class MessageForAnswerJob < ApplicationJob
                  Answer.find(args[0]).reply_to.id
                end
     subs = Question.find(question).subscribers
-    subs&.each do |subscriber_id|
-      NewMessageMailer.message(User.find(subscriber_id).email).deliver_later # (User.find(subscriber_id).email)
+    subs.each do |subscriber_id|
+      user = User.find(subscriber_id)
+      NewMessageMailer.digest_question(user, question).deliver_later if user
     end
   end
 end

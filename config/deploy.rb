@@ -22,6 +22,9 @@ namespace :deploy do
     on roles(:app), in: :sequence, wait: 5 do
       invoke 'unicorn:restart'
     end
+    on roles(:app), in: :sequence, wait: 5 do
+      invoke 'sidekiq:restart'
+    end
   end
 
   after :publishing, :restart

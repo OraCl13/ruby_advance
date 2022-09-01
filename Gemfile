@@ -85,6 +85,8 @@ gem 'sidekiq', '~> 3.2.1'
 
 gem 'sidetiq'
 
+gem 'sidekiq_mailer'
+
 gem 'sinatra', '>= 1.3.0', require: nil
 
 gem 'unicorn'
