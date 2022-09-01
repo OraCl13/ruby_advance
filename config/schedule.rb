@@ -7,6 +7,7 @@ every 1.day do
 end
 
 every 1.minute do
-  puts 'XXXXXX' * 1000
+  Rails.logger.debug 'XXXXXX' * 1000
+  rake 'ts:index'
   rake 'ts:rebuild'
 end
