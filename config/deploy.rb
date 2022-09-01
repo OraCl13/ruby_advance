@@ -22,7 +22,6 @@ namespace :deploy do
     on roles(:app), in: :sequence, wait: 5 do
       invoke 'unicorn:restart'
     end
-    execute 'RAILS_ENV=production bundle exec rake ts:index'
   end
 
   after :publishing, :restart
