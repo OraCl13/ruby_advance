@@ -9,7 +9,7 @@ set :deploy_to, '/home/deployer/ruby_advance'
 set :deploy_user, 'deployer'
 
 # Default value for :linked_files is []
-append :linked_files, 'config/database.yml', '.env', 'config/redis.yml', 'config/cable.yml'
+append :linked_files, 'config/database.yml', '.env', 'config/redis.yml', 'config/cable.yml', 'config/sidekiq.yml'
 
 # Default value for linked_dirs is []
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'tmp/webpacker',
@@ -21,9 +21,6 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       invoke 'unicorn:restart'
-    end
-    on roles(:app), in: :sequence, wait: 5 do
-      invoke 'sidekiq:restart'
     end
   end
 
