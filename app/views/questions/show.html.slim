@@ -29,18 +29,18 @@
         = render 'answers', question: @question, user: current_user
 
 .col-sm-6 style="max-width: 100%"
-.card
-.card-body
-- if current_user
-  strong Give answer
-  = form_for [@question, @answer], remote: true, html: { id: @answer.id }, data: { type: :json } do |f|
-    = f.label :body, 'Your answer'
-    .answer-errors
-    = f.text_area :body
-    p Add Attachments:
-    p
-      = f.fields_for :attachments, @answer.attachments.build do |a|
-        = render 'attachment_fields', f: a
-    p
-      = link_to_add_association "add file", f, :attachments
-    = f.submit 'Create', class: 'button_create'
+  .card
+    .card-body
+      -if current_user
+        strong Give answer
+        = form_for [@question, @answer], remote: true, html: {id: @answer.id}, data: { type: :json } do |f|
+          = f.label :body, 'Your answer'
+          .answer-errors
+          = f.text_area :body
+          p Add Attachments:
+          p
+            = f.fields_for :attachments, @answer.attachments.build do |a|
+              = render 'attachment_fields', f: a
+          p
+            = link_to_add_association "add file", f, :attachments
+          = f.submit 'Create', class: 'button_create'
