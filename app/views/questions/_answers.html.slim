@@ -28,12 +28,13 @@ h2 Answers
           - if answer.user_id.equal? user.id
             p = link_to 'Edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
             .answer-errors
-            p
-              = form_for [question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
-                = f.label :body, 'Answer'
-                = f.text_area :body
-                = f.submit 'Save'
-              = button_to 'Destroy answer', question_answer_path(question, answer), method: :delete, remote: true
+            - if user
+              p
+                = form_for [question, answer], remote: true, html: { id: "edit-answer-#{answer.id}" } do |f|
+                  = f.label :body, 'Answer'
+                  = f.text_area :body
+                  = f.submit 'Save'
+                = button_to 'Destroy answer', question_answer_path(question, answer), method: :delete, remote: true
         hr
         h4 Answer Comments
         .answer_comments
@@ -43,12 +44,13 @@ h2 Answers
                 = render 'questions/comments', comment: comment, answer: answer, question: question, user: user
             - else
               p There are no comments, be first who write smth
-        = form_for [question, answer, answer.comments.build],
+        - if user
+          = form_for [question, answer, answer.comments.build],
                 remote: true, data: { type: :json },
               html: { class: "new_answer_comment" } do |f|
-          = f.hidden_field :is_question?, value: false
-          = f.label :body, "."
-          = f.text_area :body
-          = f.submit 'Create'
-        hr
+            = f.hidden_field :is_question?, value: false
+            = f.label :body, "."
+            = f.text_area :body
+            = f.submit 'Create'
+          hr
     hr
