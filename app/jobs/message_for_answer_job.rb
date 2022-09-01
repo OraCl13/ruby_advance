@@ -11,7 +11,6 @@ class MessageForAnswerJob < ApplicationJob
                  Answer.find(args[0]).reply_to.id
                end
     Question.find(question).subscribers.each do |subscriber_id|
-      puts 'Y' *1000
       NewMessageMailer.message(User.find(subscriber_id).email).deliver_later
     end
   end
